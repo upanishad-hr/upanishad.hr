@@ -34,7 +34,7 @@ const MagneticButton: React.FC<{ children: React.ReactNode; onClick: () => void;
 function App() {
   const [activeSection, setActiveSection] = useState<ActiveSection>('hero');
 
-  const word = { hidden: { y: 20, opacity: 0 }, show: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 100 } } };
+  const word = { hidden: { y: 20, opacity: 0 }, show: { y: 0, opacity: 1, transition: { type: "spring" as const, stiffness: 100 } } };
 
   return (
     <div className="relative w-screen h-screen overflow-hidden" style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden' }}>

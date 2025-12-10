@@ -1,7 +1,7 @@
 import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Stars } from '@react-three/drei';
-import { BufferGeometry, Float32BufferAttribute, Points, ShaderMaterial, Color, MathUtils, CanvasTexture } from 'three';
+import { BufferGeometry, Points, ShaderMaterial, Color, MathUtils, CanvasTexture } from 'three';
 
 type ActiveSection = 'hero' | 'shaman' | 'developer';
 
