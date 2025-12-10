@@ -19,7 +19,7 @@ const ShamanSection: React.FC = () => {
         The Shaman's Path
       </motion.h2>
       
-      <div className="space-y-8 text-2xl md:text-3xl text-gray-100 font-light leading-relaxed">
+      <div className="space-y-8 text-xl md:text-2xl text-gray-50 font-normal leading-relaxed drop-shadow-md">
         <motion.p initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
           For the last 20 years, I have been actively searching for and investigating the consciousness field. 
           What I found works best for me is <span className="text-green-300 font-medium">South American technology from the jungle</span>, 
@@ -32,7 +32,7 @@ const ShamanSection: React.FC = () => {
         </motion.p>
         
         <motion.p initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }}
-          className="border-t border-white/10 pt-8 mt-10 text-green-200/80 italic text-xl md:text-2xl">
+          className="border-t border-white/10 pt-8 mt-10 text-green-200/80 italic text-lg">
           If you are here to explore these topics or need a guide in the subtle realms, feel free to contact me.
         </motion.p>
       </div>

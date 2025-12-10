@@ -19,7 +19,7 @@ const DeveloperSection: React.FC = () => {
         The Developer's Craft
       </motion.h2>
       
-      <div className="space-y-8 text-2xl md:text-3xl text-gray-100 font-light leading-relaxed">
+      <div className="space-y-8 text-xl md:text-2xl text-gray-50 font-normal leading-relaxed drop-shadow-md">
         <motion.p initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
           Throughout my career, I've worked across numerous technologies, consistently pushing the boundaries and
           staying at the cutting edge. I've operated at an <span className="text-blue-300 font-medium">architect level</span>, 
@@ -40,7 +40,7 @@ const DeveloperSection: React.FC = () => {
         </motion.p>
         
         <motion.p initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }}
-          className="border-t border-white/10 pt-8 mt-10 text-blue-200/80 italic text-xl md:text-2xl">
+          className="border-t border-white/10 pt-8 mt-10 text-blue-200/80 italic text-lg">
           If you are here to explore innovative architectural solutions and human-centric development, feel free to contact me.
         </motion.p>
       </div>
