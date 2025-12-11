@@ -10,7 +10,7 @@ const ShamanSection: React.FC = () => {
     >
       <div className="absolute top-0 left-0 w-64 h-64 bg-green-500/10 rounded-full blur-[80px] -z-10 group-hover:bg-green-500/20 transition-all duration-700"></div>
 
-      <motion.h2 
+      <motion.h2
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -18,23 +18,55 @@ const ShamanSection: React.FC = () => {
       >
         The Shaman's Path
       </motion.h2>
-      
-      <div className="space-y-8 text-xl md:text-2xl text-gray-50 font-normal leading-relaxed drop-shadow-md">
-        <motion.p initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
-          For the last 20 years, I have been actively searching for and investigating the consciousness field. 
-          What I found works best for me is <span className="text-green-300 font-medium">South American technology from the jungle</span>, 
-          spending extensive time in isolation studying from specific plants.
-        </motion.p>
-        
-        <motion.p initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
-          Following that path, I dedicated myself to researching plants from both <span className="text-emerald-200">Europe and South America</span>. 
-          I work closely with renowned allies such as <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-lime-400">Ayahuasca and Mapacho</span>.
-        </motion.p>
-        
-        <motion.p initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }}
-          className="border-t border-white/10 pt-8 mt-10 text-green-200/80 italic text-lg">
-          If you are here to explore these topics or need a guide in the subtle realms, feel free to contact me.
-        </motion.p>
+
+      <div className="max-h-[60vh] overflow-y-auto pr-4 shaman-scroll">
+        <div className="space-y-8 text-xl md:text-2xl text-gray-50 font-normal leading-relaxed drop-shadow-md">
+          <motion.p initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
+            My journey with consciousness exploration started naively—learning about different cultures from around the world
+            and how they approach human consciousness and existence through <span className="text-green-300 font-medium">religion, spiritual practices,
+            local shamans, and healers</span>.
+          </motion.p>
+
+          <motion.p initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
+            As I expanded my models, trying to engulf all these different practices, it became apparent that there is a
+            certain <span className="text-emerald-200">disconnection between the mind's ability to create the correct model</span> and reality itself.
+            The models are usually just used as story parallels, but most people act from an entirely different place.
+          </motion.p>
+
+          <motion.p initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }}>
+            Then I came to realize that there is <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-lime-400">something beyond the mind</span>.
+            There is intellect—inherent to mind and limited. And then there is intelligence—which exists even without a mind.
+          </motion.p>
+
+          <motion.p initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }}>
+            This is how I was drawn to the plants and <span className="text-green-300 font-medium">South American shamans and their technology</span>.
+            On the surface, they seem like very simple people, but they carry deep intelligence—one that doesn't have
+            many applications in what we would conventionally consider uses of intelligence.
+          </motion.p>
+
+          <motion.p initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.5 }}>
+            Their ability to <span className="text-emerald-200">escape the patterns</span> that we as humans have learned, and to create systems
+            through which they travel and navigate with the same intelligence that works on abstract, paradoxical levels
+            when we try to see it—this is what drew me in.
+          </motion.p>
+
+          <motion.p initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.6 }}>
+            This is why all different inheritances of spiritual knowledge—all different religions, all different traditions—are
+            <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-lime-400"> dead the moment you try to capture them through the mind's intellect</span>.
+            You can only capture the instructions on how to get there yourself.
+          </motion.p>
+
+          <motion.p initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.7 }}>
+            But the Western mind tries to use that knowledge, those experiences, to create more models,
+            bigger patterns that engulf everything—searching for a <span className="text-emerald-200">theory of everything</span>.
+            But it's not possible. It is always a finite model trying to capture infinity.
+          </motion.p>
+
+          <motion.p initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.8 }}
+            className="border-t border-white/10 pt-8 mt-10 text-green-200/80 italic text-lg">
+            If you are here to explore these topics or need a guide in the subtle realms, feel free to contact me.
+          </motion.p>
+        </div>
       </div>
     </motion.div>
   );
