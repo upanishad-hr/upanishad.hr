@@ -66,6 +66,20 @@ const ShamanSection: React.FC = () => {
             className="border-t border-white/10 pt-8 mt-10 text-green-200/80 italic text-lg">
             If you are here to explore these topics or need a guide in the subtle realms, feel free to contact me.
           </motion.p>
+
+          <motion.a
+            href="https://matej0909.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.9 }}
+            whileHover={{ scale: 1.02 }}
+            className="inline-block mt-6 px-6 py-3 rounded-full bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 text-green-300 font-medium hover:border-green-400/50 hover:from-green-500/30 hover:to-emerald-500/30 transition-all duration-300"
+          >
+            Learn more about my journey →
+          </motion.a>
         </div>
       </div>
     </motion.div>
