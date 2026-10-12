@@ -2,31 +2,48 @@
 // Homepage. Hero: many sources flow in, merge into Upanishad and leave as three arms, with fish in the water.
 // Below: one river draws itself down the page on scroll through [data-spine] anchors; a shoal of fish lives in the
 // part already drawn, scatters from the cursor, ripples where the cursor crosses the water and waits at the weir
-// until a change is confirmed.
+// until a change is confirmed. All text comes from src/i18n/strings.ts.
 import { contact, legal } from '../data/company';
+import { strings, type Lang } from '../i18n/strings';
 
-const projects = [
-  { name: 'SportLive', kind: 'Platforma za sportske podatke', rim: 'SPREMNO ZA PILOT', level: 75, side: 'left', body: 'Gradimo je i vodimo od arhitekture do produkcije. Prikuplja koeficijente od mnogo pružatelja, prepozna isti susret pod različitim imenima i šalje jedan feed s cijenama za svakog klijenta.', meta: 'Kotlin · Aeron · Kubernetes' },
-  { name: 'Catapult', kind: 'Virtualno snimanje TV prijenosa', rim: 'CATAPULT SPORTS · PREKO IMPECTA', level: 100, side: 'right', body: 'Za Impect iz Kölna, tvrtku za nogometnu analitiku koja je danas dio Catapult Sportsa, napravili smo sustav za snimanje licenciranih TV prijenosa utakmica. U industriji se za to obično koriste stvarna računala i hardverski enkoderi. Kod nas sve radi na virtualnim računalima, a sliku hvatamo izravno s grafičke kartice. Radimo i na istraživanju virtualne snimke i profiliranja igrača.', meta: 'virtualna računala · NVIDIA frame buffer capture · FFmpeg' },
-  { name: 'Aura', kind: 'AI pomoćnik za iznajmljivače', rim: 'U PRODUKCIJI OD KOLOVOZA 2026', level: 100, side: 'left', body: 'Domaćin kuće za odmor razgovara s Aurom u ChatGPT-u, na hrvatskom i često glasom. Aura mijenja cijene, dostupnost i minimalni boravak u Beds24 i na Booking.comu, odgovara gostima, prijavljuje ih u eVisitor i izdaje račune. Svaku promjenu prvo pripremi, a provede je tek kad je domaćin potvrdi.', meta: 'ChatGPT · MCP · TypeScript' },
-  { name: 'Kickter', kind: 'Sponzorstva za mlade sportske klubove', rim: 'VANJSKI CTO', level: 40, side: 'right', body: 'Lokalna tvrtka zakupi mjesto za svoj logo na objavama kluba na dan utakmice, a klub pokaže da je objava izašla. Za Kickter vodimo tehnologiju kao vanjski CTO.', meta: 'domenski model · MVP' },
+interface Props { lang: Lang }
+const t = strings[Astro.props.lang];
+
+// Per-project layout (rim fill = how far along it is, side = where its tributary comes from).
+const layout = [
+  { level: 75, side: 'left' },
+  { level: 100, side: 'right' },
+  { level: 100, side: 'left' },
+  { level: 40, side: 'right' },
 ];
+const projects = t.work.projects.map((p, i) => ({ ...p, ...layout[i] }));
+const people = t.people.list.map((p, i) => ({
+  ...p,
+  size: i === 0 ? 'size-[300px] md:size-[380px]' : 'size-[240px] md:size-[280px] md:mt-48',
+  spine: i === 0,
+}));
+const h2 = 'text-[clamp(2.6rem,6vw,5.8rem)] font-[740] leading-[0.92] tracking-tight [font-stretch:80%]';
+const h3 = 'text-[clamp(2.1rem,4.2vw,4rem)] font-[740] leading-[0.95] tracking-tight [font-stretch:80%]';
+const em = 'font-iserif font-normal [font-stretch:100%]';
 ---
 
-<div class="lc min-h-screen bg-[#0B0F12] font-archivo text-[#ECEAE3]">
+<div class="lc min-h-screen bg-[#0B0F12] font-archivo text-[#ECEAE3]" data-t={JSON.stringify(t.js)}>
   <header class="absolute inset-x-0 top-0 z-30">
     <div class="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-6 md:px-12">
-      <a href="#" class="flex items-center gap-3 font-iserif text-[28px] leading-none">
+      <a href={t.home} class="flex items-center gap-3 font-iserif text-[28px] leading-none">
         <svg viewBox="0 0 32 32" class="size-7" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5" /><path d="M2 19 C 9 14, 13 22, 16 16 S 24 12, 30 15" fill="none" stroke="#6FB3CF" stroke-width="2" stroke-linecap="round" /></svg>
         Upanishad
       </a>
       <nav class="hidden gap-8 text-sm text-[#ECEAE3]/65 md:flex">
-        <a href="#lc-who" class="lc-wave">Tko smo</a><a href="#lc-how" class="lc-wave">Kako radimo</a><a href="#lc-delta" class="lc-wave">Što radimo</a>
-        <a href="#lc-work" class="lc-wave">Projekti</a>
+        <a href="#lc-who" class="lc-wave">{t.nav.who}</a><a href="#lc-how" class="lc-wave">{t.nav.how}</a><a href="#lc-delta" class="lc-wave">{t.nav.what}</a>
+        <a href="#lc-work" class="lc-wave">{t.nav.work}</a>
       </nav>
       <div class="flex items-center gap-5 text-sm">
-        <span class="text-[#ECEAE3]/50"><b class="font-medium text-[#ECEAE3]">HR</b> EN</span>
-        <a href="#lc-contact" class="lc-pill-est px-4 py-1.5">Kontakt</a>
+        <span class="flex gap-2 text-[#ECEAE3]/50">
+          <a href="/" lang="hr" hreflang="hr" class:list={['hover:text-[#ECEAE3]', t.lang === 'hr' && 'font-medium text-[#ECEAE3]']} aria-current={t.lang === 'hr' ? 'page' : undefined}>HR</a>
+          <a href="/en/" lang="en" hreflang="en" class:list={['hover:text-[#ECEAE3]', t.lang === 'en' && 'font-medium text-[#ECEAE3]']} aria-current={t.lang === 'en' ? 'page' : undefined}>EN</a>
+        </span>
+        <a href="#lc-contact" class="lc-pill-est px-4 py-1.5">{t.nav.contact}</a>
       </div>
     </div>
   </header>
@@ -41,12 +58,12 @@ const projects = [
       <circle cx="84" cy="17.5" r="0.9" fill="#0B0F12" />
     </svg>
     <div class="relative z-10 mx-auto flex h-full max-w-[1440px] flex-col justify-end px-6 pb-14 md:px-12">
-      <p class="font-mono text-[11px] tracking-[0.06em] text-[#ECEAE3]/50">Aljmaš, gdje Drava ulazi u Dunav</p>
-      <h1 class="mt-4 text-[clamp(3.2rem,8.4vw,9rem)] font-[760] leading-[0.88] tracking-[-0.02em] [font-stretch:78%]">Softver koji možete isprobati <em class="font-iserif text-[1.08em] font-normal tracking-normal [font-stretch:100%]">dok nastaje.</em></h1>
-      <p class="mt-7 max-w-2xl text-lg leading-relaxed text-[#ECEAE3]/75 md:text-xl">Upanishad gradi platforme za sportske podatke i AI alate za turizam. Kad opišete promjenu, za nekoliko minuta otvorite radnu verziju s njom, na stvarnim podacima.</p>
+      <p class="font-mono text-[11px] tracking-[0.06em] text-[#ECEAE3]/50">{t.hero.place}</p>
+      <h1 class="mt-4 text-[clamp(3.2rem,8.4vw,9rem)] font-[760] leading-[0.88] tracking-[-0.02em] [font-stretch:78%]">{t.hero.h1} <em class="font-iserif text-[1.08em] font-normal tracking-normal [font-stretch:100%]">{t.hero.h1em}</em></h1>
+      <p class="mt-7 max-w-2xl text-lg leading-relaxed text-[#ECEAE3]/75 md:text-xl">{t.hero.lead}</p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <a href="#lc-contact" class="lc-pill-solid px-5 py-2.5 text-sm">Opišite nam projekt</a>
-        <a href="#lc-how" class="lc-pill-est px-5 py-2.5 text-sm">Kako radimo</a>
+        <a href="#lc-contact" class="lc-pill-solid px-5 py-2.5 text-sm">{t.hero.cta}</a>
+        <a href="#lc-how" class="lc-pill-est px-5 py-2.5 text-sm">{t.hero.cta2}</a>
       </div>
     </div>
   </section>
@@ -66,51 +83,51 @@ const projects = [
       <i data-spine class="lc-anchor left-[22%] top-0"></i>
       <div class="relative z-[2] mx-auto max-w-[1440px] px-6 md:px-12">
         <div class="md:ml-[32%]">
-          <h2 class="text-[clamp(2.6rem,6vw,5.8rem)] font-[740] leading-[0.92] tracking-tight [font-stretch:80%]">Softverska tvrtka <em class="font-iserif font-normal [font-stretch:100%]">iz Aljmaša.</em></h2>
-          <p class="mt-7 max-w-xl text-lg leading-relaxed text-[#ECEAE3]/70">Osnovani smo 2024. Većinu posla radimo za sportsku industriju, gdje gradimo platforme za sportske podatke i virtualne sustave za snimanje TV prijenosa. Uz to radimo AI alate za turizam i vlastita istraživanja.</p>
-          <p class="mt-4 max-w-xl text-lg leading-relaxed text-[#ECEAE3]/70">Radimo za SportLive i Catapult Sports. Tvrtku vode Matej Šimunić i Leo Radočaj.</p>
+          <h2 class={h2}>{t.who.h2} <em class={em}>{t.who.h2em}</em></h2>
+          <p class="mt-7 max-w-xl text-lg leading-relaxed text-[#ECEAE3]/70">{t.who.p1}</p>
+          <p class="mt-4 max-w-xl text-lg leading-relaxed text-[#ECEAE3]/70">{t.who.p2}</p>
         </div>
 
         <div id="lc-how" class="scroll-mt-10 md:ml-[32%] mt-40">
-          <h2 class="text-[clamp(2.6rem,6vw,5.8rem)] font-[740] leading-[0.92] tracking-tight [font-stretch:80%]">Kako <em class="font-iserif font-normal [font-stretch:100%]">radimo.</em></h2>
+          <h2 class={h2}>{t.how.h2} <em class={em}>{t.how.h2em}</em></h2>
         </div>
 
         <div class="relative mt-16 grid items-center gap-10 md:grid-cols-[38%_1fr]">
           <i data-spine class="lc-anchor left-[6%] top-1/2"></i>
-          <div class="hidden space-y-2.5 pl-[32%] font-mono text-[13px] md:block" aria-label="Primjer razgovora">
-            <p class="ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-md bg-[#ECEAE3]/12 px-4 py-2.5">Dodaj specijale za nove lige u ponudu.</p>
-            <p class="w-fit max-w-[85%] rounded-2xl rounded-bl-md border border-[#ECEAE3]/15 px-4 py-2.5 text-[#ECEAE3]/80">Evo skice ekrana. Može ovako?</p>
-            <p class="ml-auto w-fit rounded-2xl rounded-br-md bg-[#ECEAE3]/12 px-4 py-2.5">Može.</p>
-            <p class="w-fit max-w-[85%] rounded-2xl rounded-bl-md border border-[#9BE564]/40 px-4 py-2.5 text-[#ECEAE3]/90">Pregled je spreman: <span class="text-[#9BE564] underline underline-offset-4">pr-148.pregled/portal</span></p>
-            <p class="pt-1 text-[10px] uppercase tracking-[0.16em] text-[#ECEAE3]/35">primjer · otprilike pet minuta od opisa do poveznice</p>
+          <div class="hidden space-y-2.5 pl-[32%] font-mono text-[13px] md:block" aria-label={t.preview.aria}>
+            <p class="ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-md bg-[#ECEAE3]/12 px-4 py-2.5">{t.preview.chat[0]}</p>
+            <p class="w-fit max-w-[85%] rounded-2xl rounded-bl-md border border-[#ECEAE3]/15 px-4 py-2.5 text-[#ECEAE3]/80">{t.preview.chat[1]}</p>
+            <p class="ml-auto w-fit rounded-2xl rounded-br-md bg-[#ECEAE3]/12 px-4 py-2.5">{t.preview.chat[2]}</p>
+            <p class="w-fit max-w-[85%] rounded-2xl rounded-bl-md border border-[#9BE564]/40 px-4 py-2.5 text-[#ECEAE3]/90">{t.preview.chat[3]} <span class="text-[#9BE564] underline underline-offset-4">{t.preview.link}</span></p>
+            <p class="pt-1 text-[10px] uppercase tracking-[0.16em] text-[#ECEAE3]/35">{t.preview.caption}</p>
           </div>
           <div>
-            <h3 class="text-[clamp(2.1rem,4.2vw,4rem)] font-[740] leading-[0.95] tracking-tight [font-stretch:80%]">Promjenu vidite <em class="font-iserif font-normal [font-stretch:100%]">za pet minuta.</em></h3>
-            <p class="mt-6 max-w-lg text-lg leading-relaxed text-[#ECEAE3]/70">Ljudi koji vode proizvod ne čekaju programera. Promjenu opišu AI asistentu u pregledniku, često na hrvatskom. Asistent pokaže skicu, napravi promjenu i za otprilike pet minuta pošalje poveznicu na radnu verziju sa stvarnim podacima.</p>
-            <p class="mt-4 max-w-lg text-lg leading-relaxed text-[#ECEAE3]/70">Svaka takva verzija dobije svoju kopiju baze i ne može ništa upisati u zajednički sustav. Kad se promjena prihvati ili odbaci, verzija nestane.</p>
+            <h3 class={h3}>{t.preview.h3} <em class={em}>{t.preview.h3em}</em></h3>
+            <p class="mt-6 max-w-lg text-lg leading-relaxed text-[#ECEAE3]/70">{t.preview.p1}</p>
+            <p class="mt-4 max-w-lg text-lg leading-relaxed text-[#ECEAE3]/70">{t.preview.p2}</p>
           </div>
         </div>
 
         <div id="lc-gate" data-state="idle" class="relative mt-40 grid items-center gap-12 md:grid-cols-[1fr_200px_1fr]">
           <div>
-            <h3 class="text-[clamp(2.1rem,4vw,3.8rem)] font-[740] leading-[0.95] tracking-tight [font-stretch:80%]">Ništa se ne mijenja <em class="font-iserif font-normal [font-stretch:100%]">bez potvrde.</em></h3>
-            <p class="mt-6 max-w-md text-lg leading-relaxed text-[#ECEAE3]/70">U Auri AI pripremi novu cijenu, ali je ne provede. Domaćin mora ponoviti iznos, samo „da” nije dovoljno. Poslužitelj zatim provjeri da se provodi točno ono što je potvrđeno i sve zapiše.</p>
-            <p class="mt-4 max-w-md text-lg leading-relaxed text-[#ECEAE3]/70">Isto pravilo vrijedi za AI u našem razvoju. Agenti rade po pisanim pravilima, a produkciju smiju samo čitati.</p>
+            <h3 class="text-[clamp(2.1rem,4vw,3.8rem)] font-[740] leading-[0.95] tracking-tight [font-stretch:80%]">{t.gate.h3} <em class={em}>{t.gate.h3em}</em></h3>
+            <p class="mt-6 max-w-md text-lg leading-relaxed text-[#ECEAE3]/70">{t.gate.p1}</p>
+            <p class="mt-4 max-w-md text-lg leading-relaxed text-[#ECEAE3]/70">{t.gate.p2}</p>
             <div class="mt-8 flex gap-2" data-buttons>
-              <button data-act="ok" class="lc-pill-solid px-5 py-2.5 text-sm">Potvrdi 108 €</button>
-              <button data-act="no" class="lc-pill-est px-5 py-2.5 text-sm">Odbaci</button>
+              <button data-act="ok" class="lc-pill-solid px-5 py-2.5 text-sm">{t.gate.ok}</button>
+              <button data-act="no" class="lc-pill-est px-5 py-2.5 text-sm">{t.gate.no}</button>
             </div>
           </div>
           <div class="relative mx-auto size-[180px]">
             <i data-spine data-weir class="lc-anchor left-1/2 top-1/2"></i>
             <div class="absolute inset-0 rounded-full border border-[#ECEAE3]/70 bg-[#0B0F12]/40"></div>
             <div class="absolute inset-[-10px] rounded-full border border-dashed border-[#ECEAE3]/25"></div>
-            <span data-pill class="lc-gate-pill absolute left-1/2 top-1/2 whitespace-nowrap rounded-full px-4 py-2 font-mono text-[13px]">sub 120 € → 108 €</span>
+            <span data-pill class="lc-gate-pill absolute left-1/2 top-1/2 whitespace-nowrap rounded-full px-4 py-2 font-mono text-[13px]">{t.gate.pill}</span>
           </div>
           <div class="relative min-h-[260px]">
             <svg viewBox="0 0 340 260" class="absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
               <path id="lc-oxbow" d="M0 110 C 60 40, 200 10, 270 70 S 300 230, 180 230 S 40 190, 0 140" fill="none" stroke="#F2A900" stroke-width="1.5" stroke-dasharray="2 7" stroke-linecap="round" />
-              <text class="lc-oxbow-text" font-size="15" font-family="Instrument Serif" font-style="italic"><textPath href="#lc-oxbow" startOffset="4%">Odbačena promjena ne ide nikamo. Cijena ostaje 120 €.</textPath></text>
+              <text class="lc-oxbow-text" font-size="15" font-family="Instrument Serif" font-style="italic"><textPath href="#lc-oxbow" startOffset="4%">{t.gate.oxbow}</textPath></text>
               <circle r="6" fill="#F2A900" opacity="0"><animateMotion id="lc-oxbow-run" dur="2.4s" begin="indefinite" fill="freeze"><mpath href="#lc-oxbow" /></animateMotion><set attributeName="opacity" to="1" begin="lc-oxbow-run.begin" /></circle>
             </svg>
             <p data-stamp class="absolute bottom-0 left-0 whitespace-pre-line font-mono text-xs leading-relaxed text-[#9BE564]"></p>
@@ -121,25 +138,25 @@ const projects = [
           <i data-spine class="lc-anchor left-[97%] top-1/2"></i>
           <div class="space-y-12 md:pr-6">
             <div>
-              <h3 class="text-[clamp(2.1rem,4.2vw,4rem)] font-[740] leading-[0.95] tracking-tight [font-stretch:80%]">Dokumentacija <em class="font-iserif font-normal [font-stretch:100%]">ne zastarijeva.</em></h3>
-              <p class="mt-6 max-w-lg text-lg leading-relaxed text-[#ECEAE3]/70">Uz kod pišemo zašto smo nešto odlučili i gdje što radi. Build ne prolazi ako dokumentacija spominje nešto čega više nema ili ako novi servis nije upisan u kartu sustava. Tko god dođe na projekt, sutra ili za godinu dana, ima točan opis.</p>
+              <h3 class={h3}>{t.docs.h3} <em class={em}>{t.docs.h3em}</em></h3>
+              <p class="mt-6 max-w-lg text-lg leading-relaxed text-[#ECEAE3]/70">{t.docs.p}</p>
             </div>
             <div>
-              <h4 class="text-2xl font-[720] tracking-tight [font-stretch:85%]">Ručnih koraka nema.</h4>
-              <p class="mt-3 max-w-lg text-lg leading-relaxed text-[#ECEAE3]/70">Svaku promjenu sustav sam testira, potpiše i postavi, više puta dnevno. Produkcija pokreće samo potpisane verzije.</p>
+              <h4 class="text-2xl font-[720] tracking-tight [font-stretch:85%]">{t.docs.autoH}</h4>
+              <p class="mt-3 max-w-lg text-lg leading-relaxed text-[#ECEAE3]/70">{t.docs.autoP}</p>
             </div>
             <div>
-              <h4 class="text-2xl font-[720] tracking-tight [font-stretch:85%]">Ideja prvo postane prototip.</h4>
-              <p class="mt-3 max-w-lg text-lg leading-relaxed text-[#ECEAE3]/70">Prije pravog koda nova ideja dobije kratak opis i prototip koji se može kliknuti, na stvarnim podacima. Ako ne valja, saznamo to tada, a ne nakon dva mjeseca razvoja.</p>
+              <h4 class="text-2xl font-[720] tracking-tight [font-stretch:85%]">{t.docs.protoH}</h4>
+              <p class="mt-3 max-w-lg text-lg leading-relaxed text-[#ECEAE3]/70">{t.docs.protoP}</p>
             </div>
           </div>
-          <div class="hidden rounded-3xl border border-[#ECEAE3]/12 bg-[#ECEAE3]/[0.03] p-6 font-mono text-[13px] leading-7 md:block" aria-label="Primjer provjere u buildu">
-            <p class="text-[10px] uppercase tracking-[0.16em] text-[#ECEAE3]/40">build · primjer</p>
-            <p class="mt-3"><span class="text-[#9BE564]">✓</span> testovi</p>
-            <p><span class="text-[#9BE564]">✓</span> verzija potpisana</p>
-            <p><span class="text-[#9BE564]">✓</span> karta sustava</p>
-            <p><span class="text-[#F2A900]">✗</span> docs/deploy.md spominje uklonjeni servis</p>
-            <p class="mt-3 text-[#F2A900]">build zaustavljen</p>
+          <div class="hidden rounded-3xl border border-[#ECEAE3]/12 bg-[#ECEAE3]/[0.03] p-6 font-mono text-[13px] leading-7 md:block" aria-label={t.docs.buildAria}>
+            <p class="text-[10px] uppercase tracking-[0.16em] text-[#ECEAE3]/40">{t.docs.build[0]}</p>
+            <p class="mt-3"><span class="text-[#9BE564]">✓</span> {t.docs.build[1]}</p>
+            <p><span class="text-[#9BE564]">✓</span> {t.docs.build[2]}</p>
+            <p><span class="text-[#9BE564]">✓</span> {t.docs.build[3]}</p>
+            <p><span class="text-[#F2A900]">✗</span> {t.docs.build[4]}</p>
+            <p class="mt-3 text-[#F2A900]">{t.docs.build[5]}</p>
           </div>
         </div>
       </div>
@@ -149,12 +166,12 @@ const projects = [
     <section id="lc-delta" class="relative bg-[linear-gradient(to_bottom,#0B0F12_0%,#0B0F12_24%,#F3EFE6_40%,#F3EFE6_100%)] pb-10 pt-16">
       <div class="relative z-[2] mx-auto max-w-[1440px] px-6 md:px-12">
         <div class="md:ml-[32%]">
-          <h2 class="text-[clamp(2.6rem,6vw,5.8rem)] font-[740] leading-[0.92] tracking-tight text-[#ECEAE3] [font-stretch:80%]">Što <em class="font-iserif font-normal [font-stretch:100%]">radimo.</em></h2>
+          <h2 class:list={[h2, 'text-[#ECEAE3]']}>{t.what.h2} <em class={em}>{t.what.h2em}</em></h2>
         </div>
       </div>
       <div class="relative z-[2] mt-6">
         <i data-spine class="lc-anchor left-[22%] top-0"></i>
-        <svg viewBox="0 0 1440 940" class="w-full overflow-visible" aria-label="Platforme za sportske podatke, AI alati za turizam, vlastita istraživanja">
+        <svg viewBox="0 0 1440 940" class="w-full overflow-visible" aria-label={t.what.aria}>
           <defs>
             <radialGradient id="lc-rbfade" cx="317" cy="0" r="260" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="black" /><stop offset="0.25" stop-color="black" /><stop offset="1" stop-color="white" /></radialGradient>
             <mask id="lc-rbmask" maskUnits="userSpaceOnUse" x="-100" y="-100" width="1700" height="1200"><rect x="-100" y="-100" width="1700" height="1200" fill="url(#lc-rbfade)" /></mask>
@@ -165,24 +182,16 @@ const projects = [
             <path id="lc-rb3" class="lc-ribbon" d="M317 0 C 317 470, 660 720, 1500 720" />
           </g>
           <g font-family="Instrument Serif" font-style="italic" font-size="34" fill="#F3EFE6">
-            <text dy="11"><textPath href="#lc-rb1" startOffset="36%">Platforme za sportske podatke</textPath></text>
-            <text dy="11"><textPath href="#lc-rb2" startOffset="40%">AI alati za turizam</textPath></text>
-            <text dy="11"><textPath href="#lc-rb3" startOffset="44%">Vlastita istraživanja</textPath></text>
+            <text dy="11"><textPath href="#lc-rb1" startOffset="36%">{t.what.arms[0]}</textPath></text>
+            <text dy="11"><textPath href="#lc-rb2" startOffset="40%">{t.what.arms[1]}</textPath></text>
+            <text dy="11"><textPath href="#lc-rb3" startOffset="44%">{t.what.arms[2]}</textPath></text>
           </g>
         </svg>
-        <div class="absolute left-[57%] top-[20%] hidden w-[36%] text-[17px] leading-relaxed text-[#ECEAE3]/80 md:block">
-          Pružatelji šalju koeficijente za isti susret pod različitim imenima. Platforma ih upari u jedan zapis, izračuna cijenu za svakog klijenta i šalje jedan standardni feed. Novi izvor dodaje se kao zaseban dodatak, bez diranja jezgre.
-        </div>
-        <div class="absolute left-[57%] top-[45%] hidden w-[36%] text-[17px] leading-relaxed text-[#1B2A33]/80 md:block">
-          Aura vodi kuću za odmor kroz razgovor u ChatGPT-u: cijene i dostupnost u Beds24 i na Booking.comu, odgovore gostima, prijave u eVisitor i račune. Domaćin potvrđuje svaku promjenu.
-        </div>
-        <div class="absolute left-[57%] top-[81%] hidden w-[36%] text-[17px] leading-relaxed text-[#1B2A33]/80 md:block">
-          Model koji predviđa gdje su igrači kad ih kamera ne vidi i upravljanje grijanjem prema vremenskoj prognozi. Oba projekta su u ranoj fazi.
-        </div>
+        <div class="absolute left-[57%] top-[20%] hidden w-[36%] text-[17px] leading-relaxed text-[#ECEAE3]/80 md:block">{t.what.d[0]}</div>
+        <div class="absolute left-[57%] top-[45%] hidden w-[36%] text-[17px] leading-relaxed text-[#1B2A33]/80 md:block">{t.what.d[1]}</div>
+        <div class="absolute left-[57%] top-[81%] hidden w-[36%] text-[17px] leading-relaxed text-[#1B2A33]/80 md:block">{t.what.d[2]}</div>
         <div class="space-y-5 px-6 pt-6 text-[#1B2A33]/80 md:hidden">
-          <p><b>Platforme za sportske podatke.</b> Koeficijenti od mnogo pružatelja, upareni u jedan zapis, s cijenom za svakog klijenta.</p>
-          <p><b>AI alati za turizam.</b> Aura vodi cijene, dostupnost, poruke gostima, eVisitor i račune. Domaćin potvrđuje svaku promjenu.</p>
-          <p><b>Vlastita istraživanja.</b> Kretanje igrača izvan kadra i grijanje prema prognozi.</p>
+          {t.what.arms.map((arm, i) => <p><b>{arm}.</b> {t.what.short[i]}</p>)}
         </div>
       </div>
     </section>
@@ -191,7 +200,7 @@ const projects = [
     <section id="lc-work" class="relative bg-[#F3EFE6] pb-20 pt-24 text-[#1B2A33]">
       <div class="relative z-[2] mx-auto max-w-[1440px] px-6 md:px-12">
         <div class="md:ml-[32%]">
-          <h2 class="text-[clamp(2.6rem,6vw,5.8rem)] font-[740] leading-[0.92] tracking-tight [font-stretch:80%]">Projekti.</h2>
+          <h2 class={h2}>{t.work.h2}</h2>
         </div>
         {projects.map((p, i) => (
           <article class="lc-proj relative mt-28 grid items-center gap-10 md:grid-cols-2" data-proj>
@@ -228,8 +237,8 @@ const projects = [
     <section id="lc-rnd" class="relative bg-[#E6E6D9] py-24 text-[#1B2A33]">
       <div class="relative z-[2] mx-auto max-w-[1440px] px-6 md:px-12">
         <div class="md:ml-[32%]">
-          <h2 class="text-[clamp(2.4rem,5vw,4.8rem)] font-[740] leading-[0.92] tracking-tight [font-stretch:80%]">Istraživanje.</h2>
-          <p class="mt-5 max-w-xl text-lg text-[#1B2A33]/70">Dio vremena ulažemo u vlastitu tehnologiju. Oba projekta su u ranoj fazi i tako ih i opisujemo.</p>
+          <h2 class="text-[clamp(2.4rem,5vw,4.8rem)] font-[740] leading-[0.92] tracking-tight [font-stretch:80%]">{t.rnd.h2}</h2>
+          <p class="mt-5 max-w-xl text-lg text-[#1B2A33]/70">{t.rnd.lead}</p>
         </div>
         <div class="relative mt-10 md:ml-[22%]">
           <i data-spine class="lc-anchor left-0 top-[5%]"></i>
@@ -240,13 +249,13 @@ const projects = [
             <path class="lc-phase" d="M360 190 C 520 120, 700 80, 1000 80" fill="none" stroke="#2C5A6E" stroke-width="5" stroke-linecap="round" pathLength="100" stroke-dasharray="40 100" />
             <path class="lc-phase" d="M360 190 C 520 260, 700 300, 1000 300" fill="none" stroke="#2C5A6E" stroke-width="5" stroke-linecap="round" pathLength="100" stroke-dasharray="10 100" />
             <g font-family="Instrument Serif" font-style="italic" font-size="23" fill="#1B2A33">
-              <text dy="-14"><textPath href="#lc-arm1" startOffset="3%">OTISAK · kretanje igrača</textPath></text>
-              <text dy="30"><textPath href="#lc-arm2" startOffset="3%">KLIMA · grijanje prema prognozi</textPath></text>
+              <text dy="-14"><textPath href="#lc-arm1" startOffset="3%">{t.rnd.arms[0]}</textPath></text>
+              <text dy="30"><textPath href="#lc-arm2" startOffset="3%">{t.rnd.arms[1]}</textPath></text>
             </g>
           </svg>
           <div class="grid gap-8 md:absolute md:inset-0 md:block">
-            <p class="max-w-sm text-[16px] leading-relaxed text-[#1B2A33]/75 md:absolute md:left-[70%] md:top-[30%]">Na televizijskoj snimci igrači bez lopte često nisu u kadru, pa se njihov položaj procjenjuje. Učimo model kako se pojedini igrač kreće i provjeravamo može li tako bolje predvidjeti gdje je, 1 do 4 sekunde unaprijed. <b class="font-medium text-[#1B2A33]">Dokaz koncepta.</b></p>
-            <p class="max-w-sm text-[16px] leading-relaxed text-[#1B2A33]/75 md:absolute md:left-[70%] md:top-[90%]">Softver upravlja grijanjem s više spremnika topline prema vremenskoj prognozi. Prvi prototip bit će staklenik. <b class="font-medium text-[#1B2A33]">U pripremi.</b></p>
+            <p class="max-w-sm text-[16px] leading-relaxed text-[#1B2A33]/75 md:absolute md:left-[70%] md:top-[30%]">{t.rnd.otisak} <b class="font-medium text-[#1B2A33]">{t.rnd.otisakStage}</b></p>
+            <p class="max-w-sm text-[16px] leading-relaxed text-[#1B2A33]/75 md:absolute md:left-[70%] md:top-[90%]">{t.rnd.klima} <b class="font-medium text-[#1B2A33]">{t.rnd.klimaStage}</b></p>
           </div>
         </div>
       </div>
@@ -265,14 +274,11 @@ const projects = [
               <path d="M24 52 C 16 56, 12 58, 8 62" />
             </g>
           </svg>
-          <h2 class="text-[clamp(2.8rem,7vw,6.6rem)] font-[740] leading-[0.9] tracking-tight [font-stretch:80%]">Ljudi.</h2>
-          <p class="mt-4 max-w-xl text-lg text-[#1B2A33]/65">Ime <em class="font-iserif text-xl">Upanishad</em> dolazi iz sanskrta i otprilike znači „sjesti blizu”.</p>
+          <h2 class="text-[clamp(2.8rem,7vw,6.6rem)] font-[740] leading-[0.9] tracking-tight [font-stretch:80%]">{t.people.h2}</h2>
+          <p class="mt-4 max-w-xl text-lg text-[#1B2A33]/65">{t.people.leadA} <em class="font-iserif text-xl">Upanishad</em> {t.people.leadB}</p>
         </div>
         <div class="relative mt-20 grid gap-16 md:grid-cols-2">
-          {[
-            { n: 'Matej Šimunić', r: 'CEO i arhitekt', b: 'Osnovao je Upanishad 2024. Iza sebe ima 14 godina softverskog inženjerstva u pet zemalja, posljednje kao solution architect u Evidenu (Atos).', ring: 'CEO · ARHITEKT · 14 GODINA · PET ZEMALJA · ', size: 'size-[300px] md:size-[380px]', spine: true },
-            { n: 'Leo Radočaj', r: 'CTO', b: 'Vodi tehnologiju platforme za sportske podatke.', ring: 'CTO · PLATFORMA SPORTSKIH PODATAKA · ', size: 'size-[240px] md:size-[280px] md:mt-48', spine: false },
-          ].map((p, i) => (
+          {people.map((p, i) => (
             <div class:list={['flex flex-col items-center gap-8 md:flex-row md:items-start', i === 1 && 'md:flex-row-reverse']}>
               <div class:list={['lc-person relative shrink-0', p.size]} tabindex="0">
                 {p.spine && <i data-spine class="lc-anchor left-1/2 top-1/2"></i>}
@@ -285,7 +291,7 @@ const projects = [
                   <path id={`lc-ring-${i}`} d="M200 12 A188 188 0 1 1 199.9 12" fill="none" />
                   <text font-size="12" font-family="JetBrains Mono Variable" letter-spacing="3" fill="#2C5A6E"><textPath href={`#lc-ring-${i}`}>{p.ring.repeat(3)}</textPath></text>
                 </svg>
-                <span class="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] text-[#1B2A33]/40">fotografija · TODO</span>
+                <span class="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] text-[#1B2A33]/40">{t.people.photo}</span>
               </div>
               <div class:list={['max-w-sm pt-6', i === 1 && 'md:text-right']}>
                 <p class="text-4xl font-[740] tracking-tight [font-stretch:82%]">{p.n}</p>
@@ -302,15 +308,15 @@ const projects = [
     <section id="lc-contact" class="relative bg-[#F3EFE6] pb-48 pt-32 text-[#1B2A33]">
       <i data-spine class="lc-anchor left-[11%] top-[40%]"></i>
       <div class="relative z-[2] mx-auto max-w-[1440px] px-6 md:px-12">
-        <svg viewBox="0 0 1200 220" class="w-full overflow-visible" aria-label="Opišite nam projekt.">
+        <svg viewBox="0 0 1200 220" class="w-full overflow-visible" aria-label={t.contact.h2}>
           <path id="lc-arc" d="M0 200 Q 600 120 1200 200" fill="none" />
-          <text font-family="Archivo Variable" font-weight="760" font-size="128" letter-spacing="-3" fill="#1B2A33" style="font-stretch: 76%"><textPath href="#lc-arc" startOffset="50%" text-anchor="middle">Opišite nam projekt.</textPath></text>
+          <text font-family="Archivo Variable" font-weight="760" font-size={t.contact.arcSize} letter-spacing="-3" fill="#1B2A33" style="font-stretch: 76%"><textPath href="#lc-arc" startOffset="50%" text-anchor="middle">{t.contact.h2}</textPath></text>
         </svg>
-        <p class="mt-10 max-w-xl text-lg leading-relaxed text-[#1B2A33]/75 md:ml-[22%]">Pošaljite nekoliko rečenica o tome što želite izgraditi. Javit će vam se Matej.</p>
+        <p class="mt-10 max-w-xl text-lg leading-relaxed text-[#1B2A33]/75 md:ml-[22%]">{t.contact.lead}</p>
         <div class="mt-10 grid gap-10 md:ml-[22%] md:grid-cols-2">
           {[
-            { label: 'e-pošta', kind: 'mail', r: contact.emailReversed },
-            { label: 'telefon', kind: 'tel', r: contact.phoneReversed },
+            { label: t.contact.email, kind: 'mail', r: contact.emailReversed },
+            { label: t.contact.phone, kind: 'tel', r: contact.phoneReversed },
           ].map((c) => (
             <a href="#" data-rr={c.r} data-kind={c.kind} class="lc-reveal group relative block text-[clamp(2rem,4vw,3.6rem)] font-[720] leading-none tracking-tight [font-stretch:80%]">
               <span class="lc-est block [--dp:4px] [--dr:1.2px]" data-v aria-hidden="true">{c.label} →</span>
@@ -318,7 +324,7 @@ const projects = [
             </a>
           ))}
         </div>
-        <p class="mt-10 font-mono text-[11px] text-[#1B2A33]/45 md:ml-[22%]">klik otkriva adresu · Mladena Palinkaša 21, 31205 Aljmaš</p>
+        <p class="mt-10 font-mono text-[11px] text-[#1B2A33]/45 md:ml-[22%]">{t.contact.note}</p>
       </div>
     </section>
     <i data-spine class="lc-anchor bottom-0 left-[9%]"></i>
@@ -330,9 +336,9 @@ const projects = [
       <path d="M0 80 L0 40 C 240 0, 480 70, 720 40 S 1200 0, 1440 36 L1440 80 Z" fill="#0B0F12" />
     </svg>
     <div class="mx-auto grid max-w-[1440px] gap-10 px-6 pb-12 pt-10 font-mono text-[11px] leading-relaxed md:grid-cols-[1fr_1fr_160px] md:px-12">
-      <div><span class="text-[#ECEAE3]">{legal.name}</span><br />{legal.full}<br />{legal.address}<br />Dunav rkm 1382</div>
-      <div>{legal.court} · MBS {legal.mbs}<br />OIB {legal.oib}<br />{legal.capital}<br />{legal.director}<br />{legal.bank}</div>
-      <svg viewBox="0 0 160 160" class="w-40" aria-label="Shematski prikaz ušća Drave u Dunav kod Aljmaša">
+      <div><span class="text-[#ECEAE3]">{legal.name}</span><br />{legal.full}<br />{t.legal.address}<br />{t.legal.river}</div>
+      <div>{t.legal.court} · MBS {legal.mbs}<br />OIB {legal.oib}<br />{t.legal.capital}<br />{t.legal.director}<br />{legal.bank}</div>
+      <svg viewBox="0 0 160 160" class="w-40" aria-label={t.legal.mapAria}>
         <path d="M80 -5 C 76 30, 96 55, 92 80 S 78 130, 94 165" fill="none" stroke="#2C5A6E" stroke-width="8" stroke-linecap="round" />
         <path d="M-5 76 C 25 72, 50 86, 66 83 S 84 79, 91 82" fill="none" stroke="#2C5A6E" stroke-width="4" stroke-linecap="round" />
         <circle cx="102" cy="92" r="3.5" fill="#ECEAE3" />
@@ -425,12 +431,10 @@ const projects = [
   const canvas = document.getElementById('lc-canvas') as HTMLCanvasElement;
   const ctx = canvas.getContext('2d')!;
   type Node = Pt & { level: number; flow: number; parent?: Node; label?: string; seed: number; out?: string };
-  const SOURCES = [
-    'feed · pružatelj 01', 'feed · pružatelj 02', 'feed · pružatelj 03', 'feed · pružatelj 04', 'feed · pružatelj 05', 'feed · pružatelj 06',
-    'TV kamera', 'praćenje igrača', 'Booking.com', 'Beds24', 'eVisitor', 'Awaze',
-    'vremenska prognoza', 'senzori topline', 'objave klubova', 'računi',
-  ];
-  const DELTA = ['sportski podaci', 'turizam', 'istraživanje'];
+  type T = { sources: string[]; delta: string[]; stampOk: string; stampNo: string; ok: string; again: string };
+  const T: T = JSON.parse(document.querySelector<HTMLElement>('.lc')!.dataset.t!);
+  const SOURCES = T.sources;
+  const DELTA = T.delta;
   let w = 0, h = 0, dpr = 1;
   let edges: [Node, Node][] = [], leaves: Node[] = [], conf!: Node;
   type HFish = { e: number; t: number; v: number; beat: number; ox: number; oy: number; vx: number; vy: number };
@@ -699,21 +703,21 @@ const projects = [
   new IntersectionObserver((es, o) => es.forEach((e) => { if (e.isIntersecting) { gate.dataset.state = 'arrived'; o.disconnect(); } }), { threshold: 0.6 }).observe(gate);
   gate.querySelectorAll<HTMLButtonElement>('[data-act]').forEach((b) => b.addEventListener('click', () => {
     if (gate.dataset.state === 'ok' || gate.dataset.state === 'no') {
-      gate.dataset.state = 'arrived'; stamp.textContent = ''; noBtn.hidden = false; okBtn.textContent = 'Potvrdi 108 €'; weirOpen = false;
+      gate.dataset.state = 'arrived'; stamp.textContent = ''; noBtn.hidden = false; okBtn.textContent = T.ok; weirOpen = false;
       fish.forEach((f) => (f.side = f.l < weirL ? 0 : 1));
       return;
     }
     if (b.dataset.act === 'ok') {
       gate.dataset.state = 'ok'; weirOpen = true;
       stamp.style.color = '#9BE564';
-      stamp.textContent = `potvrđeno ${ts()} · 108 €\nposlužitelj: provedeno točno ono što je potvrđeno ✓\nBooking.com i Beds24 ažurirani`;
+      stamp.textContent = T.stampOk.replace('{ts}', ts());
     } else {
       gate.dataset.state = 'no';
       stamp.style.color = '#F2A900';
-      stamp.textContent = `odbačeno ${ts()} · cijena ostaje 120 €`;
+      stamp.textContent = T.stampNo.replace('{ts}', ts());
       (document.getElementById('lc-oxbow-run') as unknown as SVGAnimationElement).beginElement();
     }
-    noBtn.hidden = true; okBtn.textContent = 'Ponovi';
+    noBtn.hidden = true; okBtn.textContent = T.again;
   }));
 
   // ───────────── projects come into focus at the centre of the screen ─────────────
