@@ -1,8 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
 import Home from '../components/Home.astro';
+import { strings } from '../i18n/strings';
+
+const t = strings.hr;
 ---
 
-<Base title="Upanishad · softverska tvrtka iz Aljmaša" description="Upanishad gradi platforme za sportske podatke i AI alate za turizam. Promjenu opišete, a za nekoliko minuta otvorite radnu verziju s njom.">
-  <Home />
+<Base title={t.meta.title} description={t.meta.description} lang="hr">
+  <Home lang="hr" />
 </Base>
