@@ -1,0 +1,4 @@
+# Matrix discovery for @user:upanishad.hr — see upanishad-server/hetzner/matrix.md
+/.well-known/matrix/*
+  Content-Type: application/json
+  Access-Control-Allow-Origin: *

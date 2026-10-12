@@ -1,0 +1,10 @@
+{
+  "m.homeserver": { "base_url": "https://matrix.upanishad.hr" },
+  "org.matrix.msc2965.authentication": {
+    "issuer": "https://account.upanishad.hr/",
+    "account": "https://account.upanishad.hr/account"
+  },
+  "org.matrix.msc4143.rtc_foci": [
+    { "type": "livekit", "livekit_service_url": "https://rtc.upanishad.hr/livekit/jwt" }
+  ]
+}
