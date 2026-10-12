@@ -5,7 +5,7 @@ Pushing to `main` deploys production; pull requests get a Netlify deploy preview
 
 ```bash
 npm install
-npm run dev      # http://localhost:4321  (/prototype has the design directions, ←/→ to switch)
+npm run dev      # http://localhost:4321
 npm run build    # astro check && astro build → dist/
 ```
 
