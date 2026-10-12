@@ -1,9 +1,9 @@
 ---
-// PROTOTYPE — Concept "Promatrač na ušću" (Fable, round 3). A field observer on the bank at Aljmaš, Danube rkm 1382,
-// where the Drava comes in. Hero: many sources flow in, merge into Upanishad, leave as three arms, fish in the water.
-// Below: one river draws itself down the page on scroll; a shoal of fish lives in the part that is already drawn,
-// scatters from the cursor, ripples where the cursor crosses the water, and waits at the weir until a change is approved.
-import { contact, legal } from './content';
+// Homepage. Hero: many sources flow in, merge into Upanishad and leave as three arms, with fish in the water.
+// Below: one river draws itself down the page on scroll through [data-spine] anchors; a shoal of fish lives in the
+// part already drawn, scatters from the cursor, ripples where the cursor crosses the water and waits at the weir
+// until a change is confirmed.
+import { contact, legal } from '../data/company';
 
 const projects = [
   { name: 'SportLive', kind: 'Platforma za sportske podatke', rim: 'SPREMNO ZA PILOT', level: 75, side: 'left', body: 'Gradimo je i vodimo od arhitekture do produkcije. Prikuplja koeficijente od mnogo pružatelja, prepozna isti susret pod različitim imenima i šalje jedan feed s cijenama za svakog klijenta.', meta: 'Kotlin · Aeron · Kubernetes' },
@@ -331,7 +331,7 @@ const projects = [
     </svg>
     <div class="mx-auto grid max-w-[1440px] gap-10 px-6 pb-12 pt-10 font-mono text-[11px] leading-relaxed md:grid-cols-[1fr_1fr_160px] md:px-12">
       <div><span class="text-[#ECEAE3]">{legal.name}</span><br />{legal.full}<br />{legal.address}<br />Dunav rkm 1382</div>
-      <div>{legal.court} · MBS {legal.mbs}<br />OIB {legal.oib}<br />{legal.capital}<br />{legal.director}<br />{legal.bank}<br /><a href="#" class="lc-wave mt-3 inline-block text-[#ECEAE3]">Za tim: Pritoke →</a></div>
+      <div>{legal.court} · MBS {legal.mbs}<br />OIB {legal.oib}<br />{legal.capital}<br />{legal.director}<br />{legal.bank}</div>
       <svg viewBox="0 0 160 160" class="w-40" aria-label="Shematski prikaz ušća Drave u Dunav kod Aljmaša">
         <path d="M80 -5 C 76 30, 96 55, 92 80 S 78 130, 94 165" fill="none" stroke="#2C5A6E" stroke-width="8" stroke-linecap="round" />
         <path d="M-5 76 C 25 72, 50 86, 66 83 S 84 79, 91 82" fill="none" stroke="#2C5A6E" stroke-width="4" stroke-linecap="round" />
