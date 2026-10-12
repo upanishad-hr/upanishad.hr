@@ -1,0 +1,314 @@
+---
+// PROTOTYPE — Concept "0,4 ms" (from Fable). Scrolling scrubs a sticky ruler: first through the 0.4 ms life of one
+// odds update, then the scale changes — seconds (agent), ±4 s (OTISAK), 48 h (KLIMA), months (work), years (about), "sada".
+import { work, people, contact, legal } from './content';
+
+type Scale = { name: string; min: number; max: number; unit: string; step: number; major: number; dec: number; sign?: boolean };
+const sc = (s: Scale) => JSON.stringify(s);
+
+const pipeline = [
+  { at: 0, t: '0,00 ms', title: 'Prijem', body: 'Poruka stiže od jednog od desetak pružatelja, u njegovom formatu.', code: '{"src":"prov-07","ev":"HAJ-DIN","mkt":"1x2","o":[2.45,3.05,2.90]}' },
+  { at: 0.07, t: '0,07 ms', title: 'Normalizacija', body: 'Svaki izvor prevodimo u isti model: događaj, tržište, ishodi.', code: 'event=Hajduk–Dinamo  market=1X2  odds=2.45 | 3.05 | 2.90' },
+  { at: 0.15, t: '0,15 ms', title: 'Uparivanje', body: 'Isti susret pod tri imena postaje jedan zapis s jednim identifikatorom.', code: 'HNK Hajduk Split vs GNK Dinamo ┐\nHajduk – Dinamo Zg             ├─▶ ID 48121\nHAJ v DIN                      ┘' },
+  { at: 0.25, t: '0,25 ms', title: 'Cijena', body: 'Za svakog klijenta vlastita marža i pravila.', code: 'klijent A  2,40 | 3,00 | 2,85\nklijent B  2,42 | 3,02 | 2,88' },
+  { at: 0.38, t: '0,38 ms', title: 'Isporuka', body: 'Klijent dobiva standardni feed — s obustavama, obračunom i povratom.', code: '▶ feed  1X2  48121  2,40 | 3,00 | 2,85  OPEN' },
+];
+const agent = [
+  { at: 0, t: '0 s', who: 'Domaćin', text: 'Spusti cijenu za idući vikend 10 %.' },
+  { at: 1.6, t: '1,6 s', who: 'Agent', text: 'Prijedlog: sub 120 € → 108 €, ned 120 € → 108 €. Potvrđujete?' },
+  { at: 7.8, t: '7,8 s', who: 'Domaćin', text: 'Potvrđujem.' },
+  { at: 8.1, t: '8,1 s', who: 'Poslužitelj', text: 'Provjereno: provodi se točno ono što je predloženo. ✓' },
+  { at: 9.2, t: '9,2 s', who: 'Booking.com', text: 'Cijene ažurirane.' },
+];
+---
+
+<div class="ms min-h-screen bg-[#FAFAF6] font-sans text-[#121212] selection:bg-[#1F3BFF] selection:text-white">
+  <div id="ms-ruler" class="sticky top-0 z-40 border-b border-[#D6D6CF] bg-[#FAFAF6]/95 backdrop-blur">
+    <div class="mx-auto flex h-11 max-w-[1440px] items-center justify-between px-6 md:px-10">
+      <a href="#" class="font-martian text-[13px] font-semibold tracking-tight [font-stretch:75%]">upanishad</a>
+      <nav class="hidden gap-7 text-[13px] text-[#121212]/60 md:flex">
+        <a href="#ms-data" class="hover:text-[#1F3BFF]">Podaci</a><a href="#ms-agent" class="hover:text-[#1F3BFF]">Agenti</a>
+        <a href="#ms-otisak" class="hover:text-[#1F3BFF]">Istraživanje</a><a href="#ms-work" class="hover:text-[#1F3BFF]">Radovi</a>
+        <a href="#ms-about" class="hover:text-[#1F3BFF]">O nama</a>
+      </nav>
+      <span class="font-martian text-[11px] text-[#121212]/50"><b class="text-[#121212]">HR</b> EN</span>
+    </div>
+    <div class="mx-auto max-w-[1440px] px-6 md:px-10">
+      <div id="ms-track" class="relative h-14 cursor-ew-resize touch-none select-none" title="Povucite za premotavanje">
+        <div id="ms-ticks" class="absolute inset-0 origin-left"></div>
+        <div id="ms-marks" class="absolute inset-0"></div>
+        <div id="ms-head" class="pointer-events-none absolute bottom-0 top-0 w-0.5 bg-[#1F3BFF] will-change-transform">
+          <span id="ms-val" class="absolute left-1.5 top-0 whitespace-nowrap bg-[#1F3BFF] px-1.5 py-0.5 font-martian text-[11px] font-medium text-white">0,00 ms</span>
+        </div>
+      </div>
+      <div class="flex justify-between pb-1.5 font-martian text-[10px] uppercase tracking-[0.12em] text-[#121212]/45">
+        <span id="ms-scale">skala 0 – 0,4 ms</span><span id="ms-name">Podaci</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="mx-auto max-w-[1440px] px-6 pb-24 pt-20 md:px-10 md:pt-28">
+    <p class="font-martian text-xs uppercase tracking-[0.14em] text-[#1F3BFF]">Softver za sportsku industriju</p>
+    <h1 class="mt-6 max-w-6xl text-[clamp(3rem,8.5vw,8.5rem)] font-semibold leading-[0.92] tracking-[-0.035em]">
+      Što se dogodi u <span class="font-martian font-medium tracking-[-0.06em] text-[#1F3BFF] [font-stretch:70%]">0,4 ms</span>?
+    </h1>
+    <p class="mt-8 max-w-2xl text-xl leading-relaxed text-[#121212]/70">Pratite jednu promjenu koeficijenta od pružatelja do klijenta. Onda nastavite skrolati — skala raste od milisekundi do godina, i usput vidite sve što radimo.</p>
+    <p class="mt-10 font-martian text-[11px] uppercase tracking-[0.14em] text-[#121212]/40">↓ skrolajte · ili povucite ravnalo gore</p>
+  </section>
+
+  <section id="ms-data" data-scale={sc({ name: 'Podaci · jedna promjena koeficijenta', min: 0, max: 0.4, unit: 'ms', step: 0.01, major: 0.05, dec: 2 })} class="scroll-mt-32 border-t border-[#D6D6CF]">
+    {pipeline.map((p) => (
+      <div data-at={p.at} data-label={p.title} class="ms-step mx-auto grid min-h-[46vh] max-w-[1440px] grid-cols-[88px_1fr] gap-6 px-6 py-16 md:grid-cols-[200px_minmax(0,720px)] md:px-10">
+        <p class="ms-t pt-2 font-martian text-sm font-medium md:text-base">{p.t}</p>
+        <div>
+          <h2 class="text-4xl font-semibold tracking-tight md:text-6xl">{p.title}</h2>
+          <p class="mt-4 max-w-xl text-lg leading-relaxed text-[#121212]/70">{p.body}</p>
+          <pre class="ms-code mt-8 overflow-x-auto whitespace-pre border-l-2 border-[#1F3BFF] bg-[#1F3BFF]/[0.05] px-5 py-4 font-martian text-[12px] leading-relaxed md:text-[13px]">{p.code}</pre>
+        </div>
+      </div>
+    ))}
+    <div class="mx-auto max-w-[1440px] px-6 pb-28 md:px-10">
+      <p class="max-w-4xl text-4xl font-semibold leading-tight tracking-tight md:text-6xl">Prosječno 0,4 ms. Dvadesetak dodataka, 42 zapisane arhitekturne odluke — za <span class="text-[#1F3BFF]">SportLive</span>, spremno za pilot.</p>
+    </div>
+  </section>
+
+  <section id="ms-agent" data-scale={sc({ name: 'Agenti · jedan zahtjev domaćina', min: 0, max: 10, unit: 's', step: 0.25, major: 1, dec: 1 })} class="scroll-mt-32 border-t border-[#D6D6CF] bg-[#F1F1EA]">
+    <div class="mx-auto max-w-[1440px] px-6 pt-20 md:px-10">
+      <h2 class="max-w-4xl text-5xl font-semibold leading-[0.95] tracking-tight md:text-7xl">Agent predlaže. Čovjek potvrđuje. Poslužitelj provodi.</h2>
+      <p class="mt-6 max-w-2xl text-lg text-[#121212]/70">Aura: domaćin vodi kuću za odmor razgovorom na hrvatskom — cijene, dostupnost, poruke gostima, eVisitor, računi. Najduži dio procesa je namjerno ljudski.</p>
+    </div>
+    {agent.map((a) => (
+      <div data-at={a.at} data-label={a.who} class="ms-step mx-auto grid min-h-[30vh] max-w-[1440px] grid-cols-[88px_1fr] gap-6 px-6 py-10 md:grid-cols-[200px_minmax(0,720px)] md:px-10">
+        <p class="ms-t pt-1 font-martian text-sm font-medium md:text-base">{a.t}</p>
+        <div>
+          <p class="font-martian text-[11px] uppercase tracking-[0.14em] text-[#121212]/50">{a.who}</p>
+          <p class:list={['mt-2 text-2xl leading-snug md:text-3xl', a.who === 'Domaćin' && 'font-semibold']}>{a.text}</p>
+        </div>
+      </div>
+    ))}
+    <div class="h-24"></div>
+  </section>
+
+  <section id="ms-otisak" data-scale={sc({ name: 'OTISAK · igrač izlazi iz kadra', min: -2, max: 4, unit: 's', step: 0.25, major: 1, dec: 1, sign: true })} class="scroll-mt-32 border-t border-[#D6D6CF]">
+    <div class="mx-auto grid max-w-[1440px] gap-12 px-6 py-20 md:px-10 lg:grid-cols-[1fr_1fr]">
+      <div class="lg:sticky lg:top-40 lg:self-start">
+        <p class="font-martian text-xs uppercase tracking-[0.14em] text-[#1F3BFF]">Istraživanje · OTISAK</p>
+        <h2 class="mt-4 text-5xl font-semibold leading-[0.95] tracking-tight md:text-7xl">1–4 sekunde unaprijed.</h2>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-[#121212]/70">TV snimka ne prikazuje igrače bez lopte — 40–64 % položaja je procjena. Iz prošlih utakmica učimo „otisak” kretanja svakog igrača i provjeravamo smanjuje li pogrešku predviđanja. Dokazivanje koncepta; rezultati još nisu poznati.</p>
+        <svg viewBox="0 0 480 260" class="mt-10 w-full max-w-lg" aria-hidden="true">
+          <rect x="0" y="0" width="200" height="260" fill="#1F3BFF" fill-opacity="0.05" />
+          <line x1="200" y1="0" x2="200" y2="260" stroke="#121212" stroke-opacity="0.3" stroke-dasharray="3 4" />
+          <text x="8" y="250" font-size="10" font-family="Martian Mono Variable" fill="#121212" fill-opacity="0.5">U KADRU</text>
+          <text x="208" y="250" font-size="10" font-family="Martian Mono Variable" fill="#121212" fill-opacity="0.5">IZVAN KADRA</text>
+          <path d="M20 210 C 80 200, 140 150, 200 130" fill="none" stroke="#121212" stroke-width="2.5" />
+          <path id="ms-pred" d="M200 130 C 270 105, 360 95, 460 50" fill="none" stroke="#1F3BFF" stroke-width="2" stroke-dasharray="5 6" />
+          <ellipse id="ms-ell" cx="200" cy="130" rx="6" ry="5" fill="#1F3BFF" fill-opacity="0.12" stroke="#1F3BFF" />
+          <circle id="ms-dot" cx="200" cy="130" r="4.5" fill="#1F3BFF" />
+        </svg>
+      </div>
+      <div>
+        {[
+          { at: -2, t: '−2 s', h: 'Igrač je u kadru', b: 'Položaj i brzina su izmjereni.' },
+          { at: 0, t: '0 s', h: 'Izlazi iz kadra', b: 'Od ovog trenutka svaki položaj je procjena.' },
+          { at: 1, t: '+1 s', h: 'Procjena', b: 'Bez otiska, pogreška raste s vremenom.' },
+          { at: 2.5, t: '+2,5 s', h: 'Otisak', b: 'Model zna kako se baš ovaj igrač obično kreće u ovakvoj situaciji.' },
+          { at: 4, t: '+4 s', h: 'Cilj', b: 'Barem 10 % manja pogreška od predviđanja bez otiska.' },
+        ].map((s) => (
+          <div data-at={s.at} data-label={s.h} class="ms-step grid min-h-[44vh] grid-cols-[80px_1fr] gap-4 py-8">
+            <p class="ms-t pt-1 font-martian text-sm font-medium">{s.t}</p>
+            <div><h3 class="text-3xl font-semibold tracking-tight">{s.h}</h3><p class="mt-2 text-lg text-[#121212]/70">{s.b}</p></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="ms-klima" data-scale={sc({ name: 'KLIMA · upravljanje toplinom', min: -24, max: 24, unit: 'h', step: 1, major: 6, dec: 0, sign: true })} class="scroll-mt-32 border-t border-[#D6D6CF] bg-[#F1F1EA]">
+    <div class="mx-auto grid min-h-[110vh] max-w-[1440px] content-center gap-10 px-6 py-24 md:px-10 lg:grid-cols-[1fr_1fr]">
+      <div>
+        <p class="font-martian text-xs uppercase tracking-[0.14em] text-[#1F3BFF]">Istraživanje · KLIMA · u pripremi</p>
+        <h2 class="mt-4 text-5xl font-semibold leading-[0.95] tracking-tight md:text-7xl">48 sati unaprijed.</h2>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-[#121212]/70">Vodeni krug s više spremnika topline, bez dizalice topline. Softver puni i prazni spremnike prema vremenskoj prognozi. Prvi prototip je staklenik; fiziku mjere i potvrđuju fakulteti.</p>
+      </div>
+      <svg viewBox="0 0 480 220" class="w-full self-center" aria-hidden="true">
+        <line x1="240" y1="0" x2="240" y2="220" stroke="#1F3BFF" stroke-width="1.5" />
+        <text x="246" y="14" font-size="10" font-family="Martian Mono Variable" fill="#1F3BFF">SADA</text>
+        <path d="M0 150 C 40 140, 60 80, 100 90 S 160 170, 200 140 S 230 110, 240 115" fill="none" stroke="#121212" stroke-width="2.5" />
+        <path d="M240 115 C 260 120, 290 170, 330 160 S 400 60, 440 80 S 470 120, 480 115" fill="none" stroke="#1F3BFF" stroke-width="2" stroke-dasharray="5 6" />
+        <text x="4" y="210" font-size="10" font-family="Martian Mono Variable" fill="#121212" fill-opacity="0.5">IZMJERENO</text>
+        <text x="476" y="210" text-anchor="end" font-size="10" font-family="Martian Mono Variable" fill="#121212" fill-opacity="0.5">PLAN PREMA PROGNOZI</text>
+      </svg>
+    </div>
+  </section>
+
+  <section id="ms-work" data-scale={sc({ name: 'Radovi · od ideje do pilota', min: 0, max: 6, unit: 'mj', step: 0.25, major: 1, dec: 1 })} class="scroll-mt-32 border-t border-[#D6D6CF]">
+    <div class="mx-auto max-w-[1440px] px-6 py-20 md:px-10">
+      <h2 class="max-w-4xl text-5xl font-semibold leading-[0.95] tracking-tight md:text-7xl">3–6 mjeseci od ideje do pilota.</h2>
+      <div class="mt-16 border-t border-[#121212]">
+        {work.map((w, i) => (
+          <article data-at={1 + i * 1.4} data-label={w.client} class="ms-step grid min-h-[30vh] gap-6 border-b border-[#D6D6CF] py-10 md:grid-cols-[200px_1fr_1.3fr]">
+            <p class="ms-t font-martian text-sm font-medium">{w.status}</p>
+            <div><h3 class="text-4xl font-semibold tracking-tight">{w.client}</h3><p class="mt-2 text-[#121212]/60">{w.kind}</p></div>
+            <div><p class="text-lg leading-relaxed text-[#121212]/75">{w.body}</p><p class="mt-4 font-martian text-[11px] uppercase tracking-[0.1em] text-[#121212]/45">{w.role}</p></div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="ms-about" data-scale={sc({ name: 'O nama', min: 0, max: 14, unit: 'god.', step: 0.5, major: 2, dec: 0 })} class="scroll-mt-32 border-t border-[#D6D6CF] bg-[#121212] text-[#FAFAF6]">
+    <div class="mx-auto grid min-h-[120vh] max-w-[1440px] content-center gap-16 px-6 py-24 md:px-10 lg:grid-cols-[1.1fr_1fr]">
+      <div>
+        <h2 class="text-5xl font-semibold leading-[0.95] tracking-tight md:text-7xl">14 godina.<br />Pet zemalja.<br /><span class="text-[#8EA0FF]">Jedan Aljmaš.</span></h2>
+        <p class="mt-8 max-w-lg text-lg leading-relaxed text-[#FAFAF6]/70">Upanishad je osnovan 2024. na ušću Drave u Dunav. Ime je sanskrtsko — otprilike „sjesti blizu”.</p>
+        <p class="mt-8 max-w-lg font-martian text-sm text-[#FAFAF6]/60">„Alat koji zna reći ne je alat kojem se vjeruje.”</p>
+      </div>
+      <div class="space-y-10 self-center">
+        {people.map((p, i) => (
+          <div data-at={i === 0 ? 14 : 4} data-label={p.name.split(' ')[0]} class="ms-step border-t border-[#FAFAF6]/20 pt-6">
+            <p class="text-3xl font-semibold">{p.name}</p>
+            <p class="mt-1 font-martian text-[11px] uppercase tracking-[0.14em] text-[#8EA0FF]">{p.role}</p>
+            <p class="mt-3 text-[#FAFAF6]/70">{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="ms-contact" data-scale={sc({ name: 'Kontakt', min: 0, max: 1, unit: 'sada', step: 0.1, major: 1, dec: 0 })} class="scroll-mt-32 border-t border-[#D6D6CF]">
+    <div class="mx-auto max-w-[1440px] px-6 py-28 md:px-10">
+      <h2 class="text-[clamp(3rem,10vw,9rem)] font-semibold leading-[0.88] tracking-[-0.04em]">Javite se <span class="text-[#1F3BFF]">sada.</span></h2>
+      <div class="mt-12 flex flex-col gap-4 font-martian text-lg md:flex-row md:gap-12">
+        <a data-r={contact.emailReversed} href="#" class="border-b-2 border-[#1F3BFF] pb-1 hover:text-[#1F3BFF]"><span data-slot>prikaži e-poštu →</span></a>
+        <a data-r={contact.phoneReversed} data-kind="tel" href="#" class="border-b-2 border-[#1F3BFF] pb-1 hover:text-[#1F3BFF]"><span data-slot>prikaži telefon →</span></a>
+      </div>
+    </div>
+    <footer class="mx-auto grid max-w-[1440px] gap-6 border-t border-[#D6D6CF] px-6 py-10 font-martian text-[11px] leading-relaxed text-[#121212]/50 md:grid-cols-3 md:px-10">
+      <div><b class="text-[#121212]">{legal.name}</b><br />{legal.address}</div>
+      <div>{legal.court}, MBS {legal.mbs} · OIB {legal.oib}<br />{legal.capital} · {legal.director}</div>
+      <div class="md:text-right">{legal.bank}<br /><a href="#" class="hover:text-[#1F3BFF]">Za tim →</a></div>
+    </footer>
+  </section>
+</div>
+
+<style is:global>
+  .ms-step .ms-t { color: rgb(18 18 18 / 0.3); transition: color 200ms; }
+  .ms-step.ms-on .ms-t { color: #1F3BFF; }
+  .ms-step { opacity: 0.35; transition: opacity 300ms; }
+  .ms-step.ms-on { opacity: 1; }
+  #ms-about .ms-step .ms-t { color: inherit; }
+  .ms-tick { position: absolute; bottom: 0; width: 1px; background: #121212; }
+  .ms-tick span { position: absolute; bottom: 18px; transform: translateX(-50%); font: 500 10px "Martian Mono Variable", monospace; color: rgb(18 18 18 / 0.55); white-space: nowrap; }
+  .ms-mark { position: absolute; top: 4px; transform: translateX(-50%); font: 500 9px "Martian Mono Variable", monospace; text-transform: uppercase; letter-spacing: 0.08em; color: #1F3BFF; white-space: nowrap; }
+  .ms-mark::after { content: ''; position: absolute; left: 50%; top: 14px; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: #1F3BFF; }
+  .ms-rescale { animation: ms-rescale 520ms cubic-bezier(.2,.8,.2,1); }
+  @keyframes ms-rescale { from { transform: scaleX(0.12); opacity: 0; } to { transform: none; opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) {
+    .ms-rescale { animation: none; }
+    .ms-step { opacity: 1; }
+  }
+</style>
+
+<script>
+  type Scale = { name: string; min: number; max: number; unit: string; step: number; major: number; dec: number; sign?: boolean };
+  const root = document.querySelector<HTMLElement>('.ms')!;
+  const ruler = document.getElementById('ms-ruler')!;
+  const track = document.getElementById('ms-track')!;
+  const ticks = document.getElementById('ms-ticks')!;
+  const marks = document.getElementById('ms-marks')!;
+  const head = document.getElementById('ms-head')!;
+  const val = document.getElementById('ms-val')!;
+  const scaleEl = document.getElementById('ms-scale')!;
+  const nameEl = document.getElementById('ms-name')!;
+  const sections = [...root.querySelectorAll<HTMLElement>('section[data-scale]')];
+  const scales = sections.map((s) => JSON.parse(s.dataset.scale!) as Scale);
+
+  const fmt = (v: number, s: Scale) => {
+    if (s.unit === 'sada') return 'sada';
+    const n = Math.abs(v) < 1e-9 ? 0 : v;
+    const str = n.toFixed(s.dec).replace('.', ',').replace('-', '−');
+    return `${s.sign && n > 0 ? '+' : ''}${str} ${s.unit}`;
+  };
+
+  let current = -1;
+  function drawScale(i: number) {
+    const s = scales[i];
+    ticks.innerHTML = ''; marks.innerHTML = '';
+    if (s.unit !== 'sada') {
+      const n = Math.round((s.max - s.min) / s.step);
+      for (let k = 0; k <= n; k++) {
+        const v = s.min + k * s.step;
+        const major = Math.abs(v / s.major - Math.round(v / s.major)) < 1e-6;
+        const el = document.createElement('div');
+        el.className = 'ms-tick';
+        el.style.left = `${(k / n) * 100}%`;
+        el.style.height = major ? '14px' : '6px';
+        if (major) { const l = document.createElement('span'); l.textContent = fmt(v, s).replace(` ${s.unit}`, ''); el.append(l); }
+        ticks.append(el);
+      }
+    }
+    sections[i].querySelectorAll<HTMLElement>('[data-at]').forEach((el) => {
+      const m = document.createElement('div');
+      m.className = 'ms-mark';
+      m.style.left = `${((Number(el.dataset.at) - s.min) / (s.max - s.min)) * 100}%`;
+      m.textContent = el.dataset.label ?? '';
+      marks.append(m);
+    });
+    ticks.classList.remove('ms-rescale'); void ticks.offsetWidth; ticks.classList.add('ms-rescale');
+    scaleEl.textContent = s.unit === 'sada' ? 'skala: sada' : `skala ${fmt(s.min, s)} – ${fmt(s.max, s)}`;
+    nameEl.textContent = s.name;
+  }
+
+  const anchor = () => ruler.getBoundingClientRect().bottom + innerHeight * 0.3;
+
+  function update() {
+    if (root.offsetParent === null) return;
+    const y = anchor();
+    let idx = 0, progress = 0;
+    sections.forEach((sec, i) => {
+      const r = sec.getBoundingClientRect();
+      if (r.top <= y) { idx = i; progress = Math.min(1, Math.max(0, (y - r.top) / Math.max(1, r.height - innerHeight * 0.3))); }
+    });
+    if (sections[0].getBoundingClientRect().top > y) progress = 0;
+    if (idx !== current) { current = idx; drawScale(idx); }
+    const s = scales[idx];
+    const v = s.min + progress * (s.max - s.min);
+    head.style.transform = `translateX(${progress * track.clientWidth}px)`;
+    val.textContent = fmt(v, s);
+    val.style.transform = progress > 0.85 ? 'translateX(calc(-100% - 12px))' : '';
+    sections[idx].querySelectorAll<HTMLElement>('[data-at]').forEach((el) => el.classList.toggle('ms-on', v >= Number(el.dataset.at) - 1e-9));
+    if (sections[idx].id === 'ms-otisak') otisak(v);
+  }
+
+  const pred = document.getElementById('ms-pred') as unknown as SVGPathElement;
+  const ell = document.getElementById('ms-ell')!, dot = document.getElementById('ms-dot')!;
+  const plen = pred.getTotalLength();
+  function otisak(v: number) {
+    const t = Math.max(0, v);
+    const p = pred.getPointAtLength((plen * t) / 4);
+    const r = 6 + t * 14;
+    for (const el of [ell, dot]) { el.setAttribute('cx', String(p.x)); el.setAttribute('cy', String(p.y)); }
+    ell.setAttribute('rx', String(r * 1.3)); ell.setAttribute('ry', String(r));
+  }
+
+  let ticking = false;
+  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; update(); }); } };
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+  addEventListener('variantchange', () => { current = -1; update(); });
+
+  // Scrub: dragging the ruler scrolls the page through the current scale.
+  let dragging = false;
+  const scrub = (e: PointerEvent) => {
+    const r = track.getBoundingClientRect();
+    const p = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+    const sec = sections[Math.max(0, current)];
+    const top = sec.getBoundingClientRect().top + scrollY;
+    scrollTo({ top: top - anchor() + p * (sec.offsetHeight - innerHeight * 0.3) + 1, behavior: 'instant' as ScrollBehavior });
+  };
+  track.addEventListener('pointerdown', (e) => { dragging = true; track.setPointerCapture(e.pointerId); scrub(e); });
+  track.addEventListener('pointermove', (e) => { if (dragging) scrub(e); });
+  track.addEventListener('pointerup', () => { dragging = false; });
+
+  update();
+</script>

@@ -1,0 +1,7 @@
+# Same build as the Netlify UI had; Node pinned because Astro 7 needs >= 22.12.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"

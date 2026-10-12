@@ -1,0 +1,751 @@
+---
+// PROTOTYPE — Concept "Promatrač na ušću" (Fable, round 3). A field observer on the bank at Aljmaš, Danube rkm 1382,
+// where the Drava comes in. Hero: many sources flow in, merge into Upanishad, leave as three arms, fish in the water.
+// Below: one river draws itself down the page on scroll; a shoal of fish lives in the part that is already drawn,
+// scatters from the cursor, ripples where the cursor crosses the water, and waits at the weir until a change is approved.
+import { contact, legal } from './content';
+
+const projects = [
+  { name: 'SportLive', kind: 'Platforma za sportske podatke', rim: 'SPREMNO ZA PILOT', level: 75, side: 'left', body: 'Gradimo je i vodimo od arhitekture do produkcije. Prikuplja koeficijente od mnogo pružatelja, prepozna isti susret pod različitim imenima i šalje jedan feed s cijenama za svakog klijenta.', meta: 'Kotlin · Aeron · Kubernetes' },
+  { name: 'Catapult', kind: 'Virtualno snimanje TV prijenosa', rim: 'CATAPULT SPORTS · PREKO IMPECTA', level: 100, side: 'right', body: 'Za Impect iz Kölna, tvrtku za nogometnu analitiku koja je danas dio Catapult Sportsa, napravili smo sustav za snimanje licenciranih TV prijenosa utakmica. U industriji se za to obično koriste stvarna računala i hardverski enkoderi. Kod nas sve radi na virtualnim računalima, a sliku hvatamo izravno s grafičke kartice. Radimo i na istraživanju virtualne snimke i profiliranja igrača.', meta: 'virtualna računala · NVIDIA frame buffer capture · FFmpeg' },
+  { name: 'Aura', kind: 'AI pomoćnik za iznajmljivače', rim: 'U PRODUKCIJI OD KOLOVOZA 2026', level: 100, side: 'left', body: 'Domaćin kuće za odmor razgovara s Aurom u ChatGPT-u, na hrvatskom i često glasom. Aura mijenja cijene, dostupnost i minimalni boravak u Beds24 i na Booking.comu, odgovara gostima, prijavljuje ih u eVisitor i izdaje račune. Svaku promjenu prvo pripremi, a provede je tek kad je domaćin potvrdi.', meta: 'ChatGPT · MCP · TypeScript' },
+  { name: 'Kickter', kind: 'Sponzorstva za mlade sportske klubove', rim: 'VANJSKI CTO', level: 40, side: 'right', body: 'Lokalna tvrtka zakupi mjesto za svoj logo na objavama kluba na dan utakmice, a klub pokaže da je objava izašla. Za Kickter vodimo tehnologiju kao vanjski CTO.', meta: 'domenski model · MVP' },
+];
+---
+
+<div class="lc min-h-screen bg-[#0B0F12] font-archivo text-[#ECEAE3]">
+  <header class="absolute inset-x-0 top-0 z-30">
+    <div class="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-6 md:px-12">
+      <a href="#" class="flex items-center gap-3 font-iserif text-[28px] leading-none">
+        <svg viewBox="0 0 32 32" class="size-7" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5" /><path d="M2 19 C 9 14, 13 22, 16 16 S 24 12, 30 15" fill="none" stroke="#6FB3CF" stroke-width="2" stroke-linecap="round" /></svg>
+        Upanishad
+      </a>
+      <nav class="hidden gap-8 text-sm text-[#ECEAE3]/65 md:flex">
+        <a href="#lc-who" class="lc-wave">Tko smo</a><a href="#lc-how" class="lc-wave">Kako radimo</a><a href="#lc-delta" class="lc-wave">Što radimo</a>
+        <a href="#lc-work" class="lc-wave">Projekti</a>
+      </nav>
+      <div class="flex items-center gap-5 text-sm">
+        <span class="text-[#ECEAE3]/50"><b class="font-medium text-[#ECEAE3]">HR</b> EN</span>
+        <a href="#lc-contact" class="lc-pill-est px-4 py-1.5">Kontakt</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="lc-hero" class="relative h-[100svh] min-h-[700px] overflow-hidden">
+    <canvas id="lc-canvas" class="absolute inset-0 size-full" aria-hidden="true"></canvas>
+    <svg viewBox="0 0 120 70" class="lc-kingfisher pointer-events-none absolute right-[7%] top-[56%] w-24 md:w-28" aria-hidden="true">
+      <path d="M4 52 C 30 47, 62 53, 116 46" fill="none" stroke="#ECEAE3" stroke-opacity="0.55" stroke-width="1.3" stroke-linecap="round" />
+      <path d="M84 49 L 80 40" stroke="#ECEAE3" stroke-opacity="0.55" stroke-width="1.3" stroke-linecap="round" />
+      <path d="M58 20 L 75 17.5 C 77 13, 83 11.5, 87 14 C 90 16, 90.5 20, 89.5 23 C 93 27, 95 32, 99 42 L 96 43 C 92 38, 88 35, 84 34 C 80 33, 77.5 30, 77 26 L 75 23 Z" fill="#ECEAE3" fill-opacity="0.85" />
+      <circle cx="84" cy="17.5" r="0.9" fill="#0B0F12" />
+    </svg>
+    <div class="relative z-10 mx-auto flex h-full max-w-[1440px] flex-col justify-end px-6 pb-14 md:px-12">
+      <p class="font-mono text-[11px] tracking-[0.06em] text-[#ECEAE3]/50">Aljmaš, gdje Drava ulazi u Dunav</p>
+      <h1 class="mt-4 text-[clamp(3.2rem,8.4vw,9rem)] font-[760] leading-[0.88] tracking-[-0.02em] [font-stretch:78%]">Softver koji možete isprobati <em class="font-iserif text-[1.08em] font-normal tracking-normal [font-stretch:100%]">dok nastaje.</em></h1>
+      <p class="mt-7 max-w-2xl text-lg leading-relaxed text-[#ECEAE3]/75 md:text-xl">Upanishad gradi platforme za sportske podatke i AI alate za turizam. Kad opišete promjenu, za nekoliko minuta otvorite radnu verziju s njom, na stvarnim podacima.</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="#lc-contact" class="lc-pill-solid px-5 py-2.5 text-sm">Opišite nam projekt</a>
+        <a href="#lc-how" class="lc-pill-est px-5 py-2.5 text-sm">Kako radimo</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="lc-flow" class="relative">
+    <svg id="lc-spine" class="pointer-events-none absolute left-0 top-0 z-[1] w-full" aria-hidden="true">
+      <defs><mask id="lc-reveal" maskUnits="userSpaceOnUse"><path id="lc-spine-mask" fill="none" stroke="white" stroke-width="60" stroke-linecap="round" /></mask></defs>
+      <g mask="url(#lc-reveal)">
+        <path id="lc-spine-main" fill="none" stroke="#2C5A6E" stroke-width="12" stroke-linecap="round" />
+        <path id="lc-spine-water" class="lc-water" fill="none" stroke="#ECEAE3" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="1 18" />
+      </g>
+    </svg>
+    <canvas id="lc-fish" class="pointer-events-none fixed inset-0 z-[1] h-screen w-screen" aria-hidden="true"></canvas>
+
+    <!-- (a) WHO WE ARE, HOW WE WORK -->
+    <section id="lc-who" class="relative bg-[#0B0F12] pb-24 pt-32">
+      <i data-spine class="lc-anchor left-[22%] top-0"></i>
+      <div class="relative z-[2] mx-auto max-w-[1440px] px-6 md:px-12">
+        <div class="md:ml-[32%]">
+          <h2 class="text-[clamp(2.6rem,6vw,5.8rem)] font-[740] leading-[0.92] tracking-tight [font-stretch:80%]">Softverska tvrtka <em class="font-iserif font-normal [font-stretch:100%]">iz Aljmaša.</em></h2>
+          <p class="mt-7 max-w-xl text-lg leading-relaxed text-[#ECEAE3]/70">Osnovani smo 2024. Većinu posla radimo za sportsku industriju, gdje gradimo platforme za sportske podatke i virtualne sustave za snimanje TV prijenosa. Uz to radimo AI alate za turizam i vlastita istraživanja.</p>
+          <p class="mt-4 max-w-xl text-lg leading-relaxed text-[#ECEAE3]/70">Radimo za SportLive i Catapult Sports. Tvrtku vode Matej Šimunić i Leo Radočaj.</p>
+        </div>
+
+        <div id="lc-how" class="scroll-mt-10 md:ml-[32%] mt-40">
+          <h2 class="text-[clamp(2.6rem,6vw,5.8rem)] font-[740] leading-[0.92] tracking-tight [font-stretch:80%]">Kako <em class="font-iserif font-normal [font-stretch:100%]">radimo.</em></h2>
+        </div>
+
+        <div class="relative mt-16 grid items-center gap-10 md:grid-cols-[38%_1fr]">
+          <i data-spine class="lc-anchor left-[6%] top-1/2"></i>
+          <div class="hidden space-y-2.5 pl-[32%] font-mono text-[13px] md:block" aria-label="Primjer razgovora">
+            <p class="ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-md bg-[#ECEAE3]/12 px-4 py-2.5">Dodaj specijale za nove lige u ponudu.</p>
+            <p class="w-fit max-w-[85%] rounded-2xl rounded-bl-md border border-[#ECEAE3]/15 px-4 py-2.5 text-[#ECEAE3]/80">Evo skice ekrana. Može ovako?</p>
+            <p class="ml-auto w-fit rounded-2xl rounded-br-md bg-[#ECEAE3]/12 px-4 py-2.5">Može.</p>
+            <p class="w-fit max-w-[85%] rounded-2xl rounded-bl-md border border-[#9BE564]/40 px-4 py-2.5 text-[#ECEAE3]/90">Pregled je spreman: <span class="text-[#9BE564] underline underline-offset-4">pr-148.pregled/portal</span></p>
+            <p class="pt-1 text-[10px] uppercase tracking-[0.16em] text-[#ECEAE3]/35">primjer · otprilike pet minuta od opisa do poveznice</p>
+          </div>
+          <div>
+            <h3 class="text-[clamp(2.1rem,4.2vw,4rem)] font-[740] leading-[0.95] tracking-tight [font-stretch:80%]">Promjenu vidite <em class="font-iserif font-normal [font-stretch:100%]">za pet minuta.</em></h3>
+            <p class="mt-6 max-w-lg text-lg leading-relaxed text-[#ECEAE3]/70">Ljudi koji vode proizvod ne čekaju programera. Promjenu opišu AI asistentu u pregledniku, često na hrvatskom. Asistent pokaže skicu, napravi promjenu i za otprilike pet minuta pošalje poveznicu na radnu verziju sa stvarnim podacima.</p>
+            <p class="mt-4 max-w-lg text-lg leading-relaxed text-[#ECEAE3]/70">Svaka takva verzija dobije svoju kopiju baze i ne može ništa upisati u zajednički sustav. Kad se promjena prihvati ili odbaci, verzija nestane.</p>
+          </div>
+        </div>
+
+        <div id="lc-gate" data-state="idle" class="relative mt-40 grid items-center gap-12 md:grid-cols-[1fr_200px_1fr]">
+          <div>
+            <h3 class="text-[clamp(2.1rem,4vw,3.8rem)] font-[740] leading-[0.95] tracking-tight [font-stretch:80%]">Ništa se ne mijenja <em class="font-iserif font-normal [font-stretch:100%]">bez potvrde.</em></h3>
+            <p class="mt-6 max-w-md text-lg leading-relaxed text-[#ECEAE3]/70">U Auri AI pripremi novu cijenu, ali je ne provede. Domaćin mora ponoviti iznos, samo „da” nije dovoljno. Poslužitelj zatim provjeri da se provodi točno ono što je potvrđeno i sve zapiše.</p>
+            <p class="mt-4 max-w-md text-lg leading-relaxed text-[#ECEAE3]/70">Isto pravilo vrijedi za AI u našem razvoju. Agenti rade po pisanim pravilima, a produkciju smiju samo čitati.</p>
+            <div class="mt-8 flex gap-2" data-buttons>
+              <button data-act="ok" class="lc-pill-solid px-5 py-2.5 text-sm">Potvrdi 108 €</button>
+              <button data-act="no" class="lc-pill-est px-5 py-2.5 text-sm">Odbaci</button>
+            </div>
+          </div>
+          <div class="relative mx-auto size-[180px]">
+            <i data-spine data-weir class="lc-anchor left-1/2 top-1/2"></i>
+            <div class="absolute inset-0 rounded-full border border-[#ECEAE3]/70 bg-[#0B0F12]/40"></div>
+            <div class="absolute inset-[-10px] rounded-full border border-dashed border-[#ECEAE3]/25"></div>
+            <span data-pill class="lc-gate-pill absolute left-1/2 top-1/2 whitespace-nowrap rounded-full px-4 py-2 font-mono text-[13px]">sub 120 € → 108 €</span>
+          </div>
+          <div class="relative min-h-[260px]">
+            <svg viewBox="0 0 340 260" class="absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
+              <path id="lc-oxbow" d="M0 110 C 60 40, 200 10, 270 70 S 300 230, 180 230 S 40 190, 0 140" fill="none" stroke="#F2A900" stroke-width="1.5" stroke-dasharray="2 7" stroke-linecap="round" />
+              <text class="lc-oxbow-text" font-size="15" font-family="Instrument Serif" font-style="italic"><textPath href="#lc-oxbow" startOffset="4%">Odbačena promjena ne ide nikamo. Cijena ostaje 120 €.</textPath></text>
+              <circle r="6" fill="#F2A900" opacity="0"><animateMotion id="lc-oxbow-run" dur="2.4s" begin="indefinite" fill="freeze"><mpath href="#lc-oxbow" /></animateMotion><set attributeName="opacity" to="1" begin="lc-oxbow-run.begin" /></circle>
+            </svg>
+            <p data-stamp class="absolute bottom-0 left-0 whitespace-pre-line font-mono text-xs leading-relaxed text-[#9BE564]"></p>
+          </div>
+        </div>
+
+        <div class="relative mt-40 grid items-center gap-12 md:grid-cols-[1fr_36%]">
+          <i data-spine class="lc-anchor left-[97%] top-1/2"></i>
+          <div class="space-y-12 md:pr-6">
+            <div>
+              <h3 class="text-[clamp(2.1rem,4.2vw,4rem)] font-[740] leading-[0.95] tracking-tight [font-stretch:80%]">Dokumentacija <em class="font-iserif font-normal [font-stretch:100%]">ne zastarijeva.</em></h3>
+              <p class="mt-6 max-w-lg text-lg leading-relaxed text-[#ECEAE3]/70">Uz kod pišemo zašto smo nešto odlučili i gdje što radi. Build ne prolazi ako dokumentacija spominje nešto čega više nema ili ako novi servis nije upisan u kartu sustava. Tko god dođe na projekt, sutra ili za godinu dana, ima točan opis.</p>
+            </div>
+            <div>
+              <h4 class="text-2xl font-[720] tracking-tight [font-stretch:85%]">Ručnih koraka nema.</h4>
+              <p class="mt-3 max-w-lg text-lg leading-relaxed text-[#ECEAE3]/70">Svaku promjenu sustav sam testira, potpiše i postavi, više puta dnevno. Produkcija pokreće samo potpisane verzije.</p>
+            </div>
+            <div>
+              <h4 class="text-2xl font-[720] tracking-tight [font-stretch:85%]">Ideja prvo postane prototip.</h4>
+              <p class="mt-3 max-w-lg text-lg leading-relaxed text-[#ECEAE3]/70">Prije pravog koda nova ideja dobije kratak opis i prototip koji se može kliknuti, na stvarnim podacima. Ako ne valja, saznamo to tada, a ne nakon dva mjeseca razvoja.</p>
+            </div>
+          </div>
+          <div class="hidden rounded-3xl border border-[#ECEAE3]/12 bg-[#ECEAE3]/[0.03] p-6 font-mono text-[13px] leading-7 md:block" aria-label="Primjer provjere u buildu">
+            <p class="text-[10px] uppercase tracking-[0.16em] text-[#ECEAE3]/40">build · primjer</p>
+            <p class="mt-3"><span class="text-[#9BE564]">✓</span> testovi</p>
+            <p><span class="text-[#9BE564]">✓</span> verzija potpisana</p>
+            <p><span class="text-[#9BE564]">✓</span> karta sustava</p>
+            <p><span class="text-[#F2A900]">✗</span> docs/deploy.md spominje uklonjeni servis</p>
+            <p class="mt-3 text-[#F2A900]">build zaustavljen</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- (b) WHAT WE DO — night turns to day -->
+    <section id="lc-delta" class="relative bg-[linear-gradient(to_bottom,#0B0F12_0%,#0B0F12_24%,#F3EFE6_40%,#F3EFE6_100%)] pb-10 pt-16">
+      <div class="relative z-[2] mx-auto max-w-[1440px] px-6 md:px-12">
+        <div class="md:ml-[32%]">
+          <h2 class="text-[clamp(2.6rem,6vw,5.8rem)] font-[740] leading-[0.92] tracking-tight text-[#ECEAE3] [font-stretch:80%]">Što <em class="font-iserif font-normal [font-stretch:100%]">radimo.</em></h2>
+        </div>
+      </div>
+      <div class="relative z-[2] mt-6">
+        <i data-spine class="lc-anchor left-[22%] top-0"></i>
+        <svg viewBox="0 0 1440 940" class="w-full overflow-visible" aria-label="Platforme za sportske podatke, AI alati za turizam, vlastita istraživanja">
+          <defs>
+            <radialGradient id="lc-rbfade" cx="317" cy="0" r="260" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="black" /><stop offset="0.25" stop-color="black" /><stop offset="1" stop-color="white" /></radialGradient>
+            <mask id="lc-rbmask" maskUnits="userSpaceOnUse" x="-100" y="-100" width="1700" height="1200"><rect x="-100" y="-100" width="1700" height="1200" fill="url(#lc-rbfade)" /></mask>
+          </defs>
+          <g fill="none" stroke-linecap="round" mask="url(#lc-rbmask)">
+            <path id="lc-rb1" class="lc-ribbon" d="M317 0 C 317 110, 640 150, 1500 150" />
+            <path id="lc-rb2" class="lc-ribbon" d="M317 0 C 317 270, 700 380, 1500 380" />
+            <path id="lc-rb3" class="lc-ribbon" d="M317 0 C 317 470, 660 720, 1500 720" />
+          </g>
+          <g font-family="Instrument Serif" font-style="italic" font-size="34" fill="#F3EFE6">
+            <text dy="11"><textPath href="#lc-rb1" startOffset="36%">Platforme za sportske podatke</textPath></text>
+            <text dy="11"><textPath href="#lc-rb2" startOffset="40%">AI alati za turizam</textPath></text>
+            <text dy="11"><textPath href="#lc-rb3" startOffset="44%">Vlastita istraživanja</textPath></text>
+          </g>
+        </svg>
+        <div class="absolute left-[57%] top-[20%] hidden w-[36%] text-[17px] leading-relaxed text-[#ECEAE3]/80 md:block">
+          Pružatelji šalju koeficijente za isti susret pod različitim imenima. Platforma ih upari u jedan zapis, izračuna cijenu za svakog klijenta i šalje jedan standardni feed. Novi izvor dodaje se kao zaseban dodatak, bez diranja jezgre.
+        </div>
+        <div class="absolute left-[57%] top-[45%] hidden w-[36%] text-[17px] leading-relaxed text-[#1B2A33]/80 md:block">
+          Aura vodi kuću za odmor kroz razgovor u ChatGPT-u: cijene i dostupnost u Beds24 i na Booking.comu, odgovore gostima, prijave u eVisitor i račune. Domaćin potvrđuje svaku promjenu.
+        </div>
+        <div class="absolute left-[57%] top-[81%] hidden w-[36%] text-[17px] leading-relaxed text-[#1B2A33]/80 md:block">
+          Model koji predviđa gdje su igrači kad ih kamera ne vidi i upravljanje grijanjem prema vremenskoj prognozi. Oba projekta su u ranoj fazi.
+        </div>
+        <div class="space-y-5 px-6 pt-6 text-[#1B2A33]/80 md:hidden">
+          <p><b>Platforme za sportske podatke.</b> Koeficijenti od mnogo pružatelja, upareni u jedan zapis, s cijenom za svakog klijenta.</p>
+          <p><b>AI alati za turizam.</b> Aura vodi cijene, dostupnost, poruke gostima, eVisitor i račune. Domaćin potvrđuje svaku promjenu.</p>
+          <p><b>Vlastita istraživanja.</b> Kretanje igrača izvan kadra i grijanje prema prognozi.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- (c) PROJECTS — tributaries -->
+    <section id="lc-work" class="relative bg-[#F3EFE6] pb-20 pt-24 text-[#1B2A33]">
+      <div class="relative z-[2] mx-auto max-w-[1440px] px-6 md:px-12">
+        <div class="md:ml-[32%]">
+          <h2 class="text-[clamp(2.6rem,6vw,5.8rem)] font-[740] leading-[0.92] tracking-tight [font-stretch:80%]">Projekti.</h2>
+        </div>
+        {projects.map((p, i) => (
+          <article class="lc-proj relative mt-28 grid items-center gap-10 md:grid-cols-2" data-proj>
+            <div class:list={['relative flex justify-center', p.side === 'right' && 'md:order-2']}>
+              <svg class:list={['lc-trib absolute top-1/2 hidden h-24 -translate-y-1/2 md:block', p.side === 'left' ? 'right-[calc(50%+170px)]' : 'left-[calc(50%+170px)]']} style="width: 40vw" viewBox="0 0 400 96" preserveAspectRatio="none" aria-hidden="true">
+                <path d={p.side === 'left' ? 'M-20 10 C 160 10, 240 86, 400 48' : 'M420 10 C 240 10, 160 86, 0 48'} fill="none" stroke="#2C5A6E" stroke-width="5" stroke-linecap="round" pathLength="100" />
+              </svg>
+              <div class="relative size-[300px] md:size-[340px]">
+                <i data-spine class="lc-anchor left-1/2 top-1/2"></i>
+                <div class="absolute inset-0 rounded-full bg-[#EAE4D7]"></div>
+                <svg viewBox="0 0 340 340" class="absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
+                  <circle cx="170" cy="170" r="168" fill="none" stroke="#1B2A33" stroke-opacity="0.35" />
+                  <circle cx="170" cy="170" r="168" fill="none" stroke="#2C5A6E" stroke-width="5" pathLength="100" stroke-dasharray={p.level === 100 ? '100 0' : p.level === 40 ? '3 4 3 4 3 4 3 4 3 4 3 100' : `${p.level} 100`} transform="rotate(-90 170 170)" stroke-linecap="round" />
+                  <path id={`lc-rim-${i}`} d="M 20 170 A 150 150 0 0 1 320 170" fill="none" />
+                  <text font-size="11" font-family="JetBrains Mono Variable" letter-spacing="2.5" fill="#1B2A33" fill-opacity="0.7"><textPath href={`#lc-rim-${i}`} startOffset="50%" text-anchor="middle">{p.rim}</textPath></text>
+                </svg>
+                <div class="absolute inset-0 grid place-items-center px-8 text-center">
+                  <span class:list={['lc-est col-start-1 row-start-1 font-[760] leading-[0.9] tracking-tight [font-stretch:76%] [--dp:4px] [--dr:1.25px]', p.name.length > 9 ? 'text-5xl' : 'text-6xl md:text-7xl']} aria-hidden="true">{p.name}</span>
+                  <span class:list={['lc-focus col-start-1 row-start-1 font-[760] leading-[0.9] tracking-tight text-[#1B2A33] [font-stretch:76%]', p.name.length > 9 ? 'text-5xl' : 'text-6xl md:text-7xl']}>{p.name}</span>
+                </div>
+              </div>
+            </div>
+            <div class:list={[p.side === 'right' ? 'md:order-1 md:pl-6' : 'md:pr-6']}>
+              <p class="font-iserif text-3xl italic text-[#2C5A6E]">{p.kind}</p>
+              <p class="mt-4 max-w-lg text-lg leading-relaxed text-[#1B2A33]/80">{p.body}</p>
+              <p class="mt-5 font-mono text-[11px] tracking-[0.08em] text-[#1B2A33]/50">{p.meta}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- (d) R&D — the flood plain -->
+    <section id="lc-rnd" class="relative bg-[#E6E6D9] py-24 text-[#1B2A33]">
+      <div class="relative z-[2] mx-auto max-w-[1440px] px-6 md:px-12">
+        <div class="md:ml-[32%]">
+          <h2 class="text-[clamp(2.4rem,5vw,4.8rem)] font-[740] leading-[0.92] tracking-tight [font-stretch:80%]">Istraživanje.</h2>
+          <p class="mt-5 max-w-xl text-lg text-[#1B2A33]/70">Dio vremena ulažemo u vlastitu tehnologiju. Oba projekta su u ranoj fazi i tako ih i opisujemo.</p>
+        </div>
+        <div class="relative mt-10 md:ml-[22%]">
+          <i data-spine class="lc-anchor left-0 top-[5%]"></i>
+          <svg viewBox="0 0 1000 380" class="lc-arm hidden w-full overflow-visible md:block" aria-hidden="true">
+            <path d="M0 20 C 120 30, 220 120, 360 190" fill="none" stroke="#2C5A6E" stroke-width="4" stroke-dasharray="1 9" stroke-linecap="round" />
+            <path id="lc-arm1" d="M360 190 C 520 120, 700 80, 1000 80" fill="none" stroke="#2C5A6E" stroke-width="4" stroke-dasharray="1 9" stroke-linecap="round" />
+            <path id="lc-arm2" d="M360 190 C 520 260, 700 300, 1000 300" fill="none" stroke="#2C5A6E" stroke-width="4" stroke-dasharray="1 9" stroke-linecap="round" />
+            <path class="lc-phase" d="M360 190 C 520 120, 700 80, 1000 80" fill="none" stroke="#2C5A6E" stroke-width="5" stroke-linecap="round" pathLength="100" stroke-dasharray="40 100" />
+            <path class="lc-phase" d="M360 190 C 520 260, 700 300, 1000 300" fill="none" stroke="#2C5A6E" stroke-width="5" stroke-linecap="round" pathLength="100" stroke-dasharray="10 100" />
+            <g font-family="Instrument Serif" font-style="italic" font-size="23" fill="#1B2A33">
+              <text dy="-14"><textPath href="#lc-arm1" startOffset="3%">OTISAK · kretanje igrača</textPath></text>
+              <text dy="30"><textPath href="#lc-arm2" startOffset="3%">KLIMA · grijanje prema prognozi</textPath></text>
+            </g>
+          </svg>
+          <div class="grid gap-8 md:absolute md:inset-0 md:block">
+            <p class="max-w-sm text-[16px] leading-relaxed text-[#1B2A33]/75 md:absolute md:left-[70%] md:top-[30%]">Na televizijskoj snimci igrači bez lopte često nisu u kadru, pa se njihov položaj procjenjuje. Učimo model kako se pojedini igrač kreće i provjeravamo može li tako bolje predvidjeti gdje je, 1 do 4 sekunde unaprijed. <b class="font-medium text-[#1B2A33]">Dokaz koncepta.</b></p>
+            <p class="max-w-sm text-[16px] leading-relaxed text-[#1B2A33]/75 md:absolute md:left-[70%] md:top-[90%]">Softver upravlja grijanjem s više spremnika topline prema vremenskoj prognozi. Prvi prototip bit će staklenik. <b class="font-medium text-[#1B2A33]">U pripremi.</b></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- (e) PEOPLE -->
+    <section id="lc-people" class="relative bg-[#F3EFE6] pb-24 pt-40 text-[#1B2A33]">
+      <div class="relative z-[2] mx-auto max-w-[1440px] px-6 md:px-12">
+        <div class="relative md:ml-[32%]">
+          <svg viewBox="0 0 90 110" class="pointer-events-none absolute -top-24 right-[8%] hidden w-20 md:block" aria-hidden="true">
+            <g fill="none" stroke="#1B2A33" stroke-opacity="0.7" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 50 C 26 41, 45 39, 52 47 C 56 53, 48 62, 36 62 C 27 62, 19 57, 22 50 Z" />
+              <path d="M48 44 C 55 36, 44 28, 48 20 C 50 16, 54 14, 58 15" />
+              <path d="M58 15 C 61 14, 63 15, 64 17 L 80 19 L 64 20.5" />
+              <path d="M34 62 L 33 100 M 40 62 L 42 100 M 28 100 L 48 100" />
+              <path d="M24 52 C 16 56, 12 58, 8 62" />
+            </g>
+          </svg>
+          <h2 class="text-[clamp(2.8rem,7vw,6.6rem)] font-[740] leading-[0.9] tracking-tight [font-stretch:80%]">Ljudi.</h2>
+          <p class="mt-4 max-w-xl text-lg text-[#1B2A33]/65">Ime <em class="font-iserif text-xl">Upanishad</em> dolazi iz sanskrta i otprilike znači „sjesti blizu”.</p>
+        </div>
+        <div class="relative mt-20 grid gap-16 md:grid-cols-2">
+          {[
+            { n: 'Matej Šimunić', r: 'CEO i arhitekt', b: 'Osnovao je Upanishad 2024. Iza sebe ima 14 godina softverskog inženjerstva u pet zemalja, posljednje kao solution architect u Evidenu (Atos).', ring: 'CEO · ARHITEKT · 14 GODINA · PET ZEMALJA · ', size: 'size-[300px] md:size-[380px]', spine: true },
+            { n: 'Leo Radočaj', r: 'CTO', b: 'Vodi tehnologiju platforme za sportske podatke.', ring: 'CTO · PLATFORMA SPORTSKIH PODATAKA · ', size: 'size-[240px] md:size-[280px] md:mt-48', spine: false },
+          ].map((p, i) => (
+            <div class:list={['flex flex-col items-center gap-8 md:flex-row md:items-start', i === 1 && 'md:flex-row-reverse']}>
+              <div class:list={['lc-person relative shrink-0', p.size]} tabindex="0">
+                {p.spine && <i data-spine class="lc-anchor left-1/2 top-1/2"></i>}
+                <div class="absolute inset-0 rounded-full bg-[#EAE4D7]"></div>
+                <div class="absolute inset-0 grid place-items-center">
+                  <span class="lc-est col-start-1 row-start-1 text-[7rem] font-[780] [font-stretch:72%] [--dp:5px] [--dr:1.6px]" aria-hidden="true">{p.n.split(' ').map((x) => x[0]).join('')}</span>
+                  <span class="lc-focus col-start-1 row-start-1 text-[7rem] font-[780] text-[#1B2A33] [font-stretch:72%]">{p.n.split(' ').map((x) => x[0]).join('')}</span>
+                </div>
+                <svg viewBox="0 0 400 400" class="lc-ring absolute -inset-6 h-[calc(100%+3rem)] w-[calc(100%+3rem)] overflow-visible" aria-hidden="true">
+                  <path id={`lc-ring-${i}`} d="M200 12 A188 188 0 1 1 199.9 12" fill="none" />
+                  <text font-size="12" font-family="JetBrains Mono Variable" letter-spacing="3" fill="#2C5A6E"><textPath href={`#lc-ring-${i}`}>{p.ring.repeat(3)}</textPath></text>
+                </svg>
+                <span class="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] text-[#1B2A33]/40">fotografija · TODO</span>
+              </div>
+              <div class:list={['max-w-sm pt-6', i === 1 && 'md:text-right']}>
+                <p class="text-4xl font-[740] tracking-tight [font-stretch:82%]">{p.n}</p>
+                <p class="mt-1 font-iserif text-xl italic text-[#2C5A6E]">{p.r}</p>
+                <p class="mt-4 text-lg leading-relaxed text-[#1B2A33]/75">{p.b}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- (f) CONTACT -->
+    <section id="lc-contact" class="relative bg-[#F3EFE6] pb-48 pt-32 text-[#1B2A33]">
+      <i data-spine class="lc-anchor left-[11%] top-[40%]"></i>
+      <div class="relative z-[2] mx-auto max-w-[1440px] px-6 md:px-12">
+        <svg viewBox="0 0 1200 220" class="w-full overflow-visible" aria-label="Opišite nam projekt.">
+          <path id="lc-arc" d="M0 200 Q 600 120 1200 200" fill="none" />
+          <text font-family="Archivo Variable" font-weight="760" font-size="128" letter-spacing="-3" fill="#1B2A33" style="font-stretch: 76%"><textPath href="#lc-arc" startOffset="50%" text-anchor="middle">Opišite nam projekt.</textPath></text>
+        </svg>
+        <p class="mt-10 max-w-xl text-lg leading-relaxed text-[#1B2A33]/75 md:ml-[22%]">Pošaljite nekoliko rečenica o tome što želite izgraditi. Javit će vam se Matej.</p>
+        <div class="mt-10 grid gap-10 md:ml-[22%] md:grid-cols-2">
+          {[
+            { label: 'e-pošta', kind: 'mail', r: contact.emailReversed },
+            { label: 'telefon', kind: 'tel', r: contact.phoneReversed },
+          ].map((c) => (
+            <a href="#" data-rr={c.r} data-kind={c.kind} class="lc-reveal group relative block text-[clamp(2rem,4vw,3.6rem)] font-[720] leading-none tracking-tight [font-stretch:80%]">
+              <span class="lc-est block [--dp:4px] [--dr:1.2px]" data-v aria-hidden="true">{c.label} →</span>
+              <span class="lc-focus absolute inset-0 text-[#1B2A33]" data-v>{c.label} →</span>
+            </a>
+          ))}
+        </div>
+        <p class="mt-10 font-mono text-[11px] text-[#1B2A33]/45 md:ml-[22%]">klik otkriva adresu · Mladena Palinkaša 21, 31205 Aljmaš</p>
+      </div>
+    </section>
+    <i data-spine class="lc-anchor bottom-0 left-[9%]"></i>
+  </div>
+
+  <!-- (g) FOOTER — the Danube -->
+  <footer class="relative bg-[#0B0F12] text-[#ECEAE3]/60">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" class="absolute -top-[79px] left-0 h-20 w-full" aria-hidden="true">
+      <path d="M0 80 L0 40 C 240 0, 480 70, 720 40 S 1200 0, 1440 36 L1440 80 Z" fill="#0B0F12" />
+    </svg>
+    <div class="mx-auto grid max-w-[1440px] gap-10 px-6 pb-12 pt-10 font-mono text-[11px] leading-relaxed md:grid-cols-[1fr_1fr_160px] md:px-12">
+      <div><span class="text-[#ECEAE3]">{legal.name}</span><br />{legal.full}<br />{legal.address}<br />Dunav rkm 1382</div>
+      <div>{legal.court} · MBS {legal.mbs}<br />OIB {legal.oib}<br />{legal.capital}<br />{legal.director}<br />{legal.bank}<br /><a href="#" class="lc-wave mt-3 inline-block text-[#ECEAE3]">Za tim: Pritoke →</a></div>
+      <svg viewBox="0 0 160 160" class="w-40" aria-label="Shematski prikaz ušća Drave u Dunav kod Aljmaša">
+        <path d="M80 -5 C 76 30, 96 55, 92 80 S 78 130, 94 165" fill="none" stroke="#2C5A6E" stroke-width="8" stroke-linecap="round" />
+        <path d="M-5 76 C 25 72, 50 86, 66 83 S 84 79, 91 82" fill="none" stroke="#2C5A6E" stroke-width="4" stroke-linecap="round" />
+        <circle cx="102" cy="92" r="3.5" fill="#ECEAE3" />
+        <text x="108" y="96" font-size="11" font-family="Instrument Serif" font-style="italic" fill="#ECEAE3">Aljmaš</text>
+      </svg>
+    </div>
+  </footer>
+</div>
+
+<style is:global>
+  .lc-field { font-family: "Instrument Serif", serif; font-style: italic; font-size: 1.45rem; line-height: 1.35; max-width: 34rem; color: rgb(236 234 227 / 0.6); }
+  .lc-est {
+    color: #C98A00;
+    -webkit-mask: radial-gradient(circle, #000 var(--dr, 1.5px), transparent calc(var(--dr, 1.5px) + 0.5px)) 0 0 / var(--dp, 5px) var(--dp, 5px) repeat;
+    mask: radial-gradient(circle, #000 var(--dr, 1.5px), transparent calc(var(--dr, 1.5px) + 0.5px)) 0 0 / var(--dp, 5px) var(--dp, 5px) repeat;
+  }
+  .lc-anchor { position: absolute; width: 1px; height: 1px; pointer-events: none; }
+  .lc-pill-solid { border-radius: 999px; background: #ECEAE3; color: #0B0F12; transition: background 180ms; }
+  .lc-pill-solid:hover { background: #9BE564; }
+  .lc-pill-est { border-radius: 999px; color: #F2A900; outline: 1.5px dotted #F2A900; outline-offset: -1.5px; transition: all 180ms; }
+  .lc-pill-est:hover { color: #0B0F12; background: #ECEAE3; outline-color: transparent; }
+  .lc-wave { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='4' viewBox='0 0 16 4'%3E%3Cpath d='M0 2 C 4 0, 4 4, 8 2 S 12 0, 16 2' fill='none' stroke='%23ECEAE3' stroke-opacity='0.6'/%3E%3C/svg%3E") repeat-x 0 100% / 0 4px; padding-bottom: 5px; transition: background-size 300ms; }
+  .lc-wave:hover { background-size: 16px 4px; animation: lc-wave 0.8s linear infinite; }
+  @keyframes lc-wave { to { background-position: 16px 100%; } }
+  .lc-water { animation: lc-water 3s linear infinite; }
+  @keyframes lc-water { to { stroke-dashoffset: -38; } }
+  .lc-kingfisher { opacity: 0; animation: lc-appear 1.6s ease-out 3s forwards; }
+  @keyframes lc-appear { to { opacity: 1; } }
+
+  .lc-gate-pill { transform: translate(-50%, -220%); opacity: 0; color: #F2A900; outline: 1.5px dotted #F2A900; background: #0B0F12; transition: transform 900ms cubic-bezier(.2,.7,.2,1), opacity 600ms, color 200ms, background 200ms; }
+  #lc-gate[data-state='arrived'] .lc-gate-pill { transform: translate(-50%, -50%); opacity: 1; }
+  #lc-gate[data-state='ok'] .lc-gate-pill { transform: translate(-50%, 260%); opacity: 0; color: #0B0F12; background: #9BE564; outline-color: transparent; transition-delay: 0ms, 500ms, 0ms, 0ms; }
+  #lc-gate[data-state='no'] .lc-gate-pill { opacity: 0; transform: translate(10%, -50%); }
+  .lc-oxbow-text { fill: #F2A900; fill-opacity: 0.35; transition: fill-opacity 600ms 400ms; }
+  #lc-gate[data-state='no'] .lc-oxbow-text { fill-opacity: 1; }
+
+  .lc-ribbon { stroke: #2C5A6E; stroke-width: 64; transition: stroke-width 500ms cubic-bezier(.2,.7,.2,1); pointer-events: stroke; }
+  .lc-ribbon:hover { stroke-width: 104; }
+
+  .lc-focus { clip-path: circle(0% at 50% 50%); transition: clip-path 900ms cubic-bezier(.2,.7,.2,1) 250ms; }
+  .lc-proj.lc-on .lc-focus, .lc-person:hover .lc-focus, .lc-person:focus-visible .lc-focus, .lc-reveal:hover .lc-focus, .lc-reveal:focus-visible .lc-focus, .lc-reveal[data-revealed] .lc-focus { clip-path: circle(75% at 50% 50%); transition-delay: 0ms; }
+  .lc-trib path { stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset 1100ms cubic-bezier(.2,.7,.2,1); }
+  .lc-proj.lc-on .lc-trib path { stroke-dashoffset: 0; }
+  .lc-ring { opacity: 0; transform: rotate(-20deg); transition: opacity 400ms, transform 900ms cubic-bezier(.2,.7,.2,1); }
+  .lc-person:hover .lc-ring, .lc-person:focus-visible .lc-ring { opacity: 1; transform: none; }
+  .lc-person { outline: none; }
+
+  .lc-phase { opacity: 0; transition: opacity 400ms; }
+  .lc-arm:hover .lc-phase { opacity: 1; }
+  .lc-arm path[stroke-dasharray='1 9'] { animation: lc-water 2.4s linear infinite; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lc-water, .lc-arm path { animation: none !important; }
+    .lc-focus, .lc-trib path, .lc-ring, .lc-gate-pill { transition: none; }
+    .lc-kingfisher { animation: none; opacity: 1; }
+  }
+</style>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const coarse = matchMedia('(pointer: coarse)').matches;
+  type Pt = { x: number; y: number };
+  const pointer = { x: -1e4, y: -1e4, at: 0 };
+  addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse') { pointer.x = e.clientX; pointer.y = e.clientY; pointer.at = performance.now(); } }, { passive: true });
+
+  // Tail-beating fish: a short bent stroke from tail to head.
+  // A small fish: spindle body with a beating tail, filled with the current stroke colour.
+  function drawFish(ctx: CanvasRenderingContext2D, x: number, y: number, dx: number, dy: number, len: number, beat: number) {
+    const L = len * 1.25, wdt = L * 0.2, sw = Math.sin(beat) * 0.45;
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(Math.atan2(dy, dx));
+    ctx.fillStyle = ctx.strokeStyle;
+    ctx.beginPath();
+    ctx.moveTo(L * 0.5, 0);
+    ctx.quadraticCurveTo(L * 0.1, -wdt, -L * 0.32, sw * wdt * 0.6);
+    ctx.quadraticCurveTo(L * 0.1, wdt, L * 0.5, 0);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(-L * 0.28, sw * wdt * 0.6);
+    ctx.lineTo(-L * 0.55, sw * wdt * 2.2 - wdt * 0.9);
+    ctx.lineTo(-L * 0.55, sw * wdt * 2.2 + wdt * 0.9);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // ───────────── hero: tributaries with fish, merging into Upanishad, three arms out ─────────────
+  const hero = document.getElementById('lc-hero')!;
+  const canvas = document.getElementById('lc-canvas') as HTMLCanvasElement;
+  const ctx = canvas.getContext('2d')!;
+  type Node = Pt & { level: number; flow: number; parent?: Node; label?: string; seed: number; out?: string };
+  const SOURCES = [
+    'feed · pružatelj 01', 'feed · pružatelj 02', 'feed · pružatelj 03', 'feed · pružatelj 04', 'feed · pružatelj 05', 'feed · pružatelj 06',
+    'TV kamera', 'praćenje igrača', 'Booking.com', 'Beds24', 'eVisitor', 'Awaze',
+    'vremenska prognoza', 'senzori topline', 'objave klubova', 'računi',
+  ];
+  const DELTA = ['sportski podaci', 'turizam', 'istraživanje'];
+  let w = 0, h = 0, dpr = 1;
+  let edges: [Node, Node][] = [], leaves: Node[] = [], conf!: Node;
+  type HFish = { e: number; t: number; v: number; beat: number; ox: number; oy: number; vx: number; vy: number };
+  let hfish: HFish[] = [];
+
+  const bez = (a: Pt, b: Pt, t: number): Pt => {
+    const mx = (a.x + b.x) / 2, u = 1 - t;
+    return { x: u * u * u * a.x + 3 * u * u * t * mx + 3 * u * t * t * mx + t * t * t * b.x, y: u * u * u * a.y + 3 * u * u * t * a.y + 3 * u * t * t * b.y + t * t * t * b.y };
+  };
+  const sway = (p: Pt, time: number, seed: number): Pt => ({ x: p.x, y: p.y + Math.sin(time * 0.5 + seed + p.x * 0.008) * 2.2 });
+
+  function build() {
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    w = hero.clientWidth; h = hero.clientHeight;
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    edges = [];
+    const top = h * 0.1, bottom = h * 0.5, x0 = w * 0.03;
+    conf = { x: w * 0.6, y: h * 0.3, level: 99, flow: SOURCES.length, seed: 0 };
+    let level: Node[] = SOURCES.map((label, i) => ({ x: x0, y: top + ((bottom - top) * (i + 0.5)) / SOURCES.length, level: 0, flow: 1, label, seed: Math.random() * 10 }));
+    leaves = level;
+    const depth = Math.ceil(Math.log2(SOURCES.length));
+    let L = 0;
+    while (level.length > 1) {
+      L++;
+      const next: Node[] = [];
+      for (let i = 0; i < level.length; i += 2) {
+        const a = level[i], b = level[i + 1];
+        const t = L / depth;
+        const n: Node = L === depth ? conf : { x: x0 + (conf.x - x0) * t, y: ((a.y + (b ?? a).y) / 2) * (1 - t * 0.6) + conf.y * t * 0.6, level: L, flow: a.flow + (b?.flow ?? 0), seed: Math.random() * 10 };
+        a.parent = n; edges.push([a, n]);
+        if (b) { b.parent = n; edges.push([b, n]); }
+        next.push(n);
+      }
+      level = next;
+    }
+    DELTA.forEach((out, i) => edges.push([conf, { x: w + 30, y: h * (0.1 + i * 0.18), level: 100, flow: SOURCES.length / 3, out, seed: Math.random() * 10 }]));
+    hfish = [];
+    edges.forEach((_, e) => {
+      const count = edges[e][1].level === 100 ? 6 : edges[e][0].level === 0 ? 1 : 2;
+      for (let k = 0; k < count; k++) hfish.push({ e, t: Math.random(), v: 0.06 + Math.random() * 0.05, beat: Math.random() * 6, ox: 0, oy: 0, vx: 0, vy: 0 });
+    });
+  }
+
+  function drawHero(time: number, dt: number) {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    ctx.lineCap = 'round';
+    for (const [a, b] of edges) {
+      const out = b.level === 100;
+      ctx.strokeStyle = out ? '#2C5A6E' : 'rgba(236,234,227,0.22)';
+      ctx.lineWidth = out ? 0.8 + Math.sqrt(b.flow) * 3.4 : 0.6 + Math.sqrt(a.flow) * 1.5;
+      ctx.beginPath();
+      for (let k = 0; k <= 26; k++) { const p = sway(bez(a, b, k / 26), time, a.seed); k ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y); }
+      ctx.stroke();
+    }
+    const hr = hero.getBoundingClientRect();
+    const px = pointer.x - hr.left, py = pointer.y - hr.top;
+    ctx.lineWidth = 1.5;
+    for (const f of hfish) {
+      const [a, b] = edges[f.e];
+      if (!reduce) { f.t += f.v * dt; f.beat += dt * 9; }
+      if (f.t > 1) { f.t -= 1; f.ox = f.oy = 0; }
+      const p = sway(bez(a, b, f.t), time, a.seed), q = sway(bez(a, b, Math.min(1, f.t + 0.01)), time, a.seed);
+      let dx = q.x - p.x, dy = q.y - p.y; const dl = Math.hypot(dx, dy) || 1; dx /= dl; dy /= dl;
+      const d = Math.hypot(p.x + f.ox - px, p.y + f.oy - py);
+      if (d < 110 && !reduce) { const k = ((110 - d) / 110) * 260 * dt; f.vx += ((p.x + f.ox - px) / d) * k; f.vy += ((p.y + f.oy - py) / d) * k; }
+      f.vx *= 0.9; f.vy *= 0.9; f.ox = (f.ox + f.vx) * 0.97; f.oy = (f.oy + f.vy) * 0.97;
+      ctx.strokeStyle = b.level === 100 ? '#ECEAE3' : 'rgba(236,234,227,0.85)';
+      drawFish(ctx, p.x + f.ox, p.y + f.oy, dx, dy, b.level === 100 ? 13 : 10, f.beat);
+    }
+    ctx.font = '11px "JetBrains Mono Variable", monospace';
+    ctx.fillStyle = 'rgba(236,234,227,0.42)';
+    for (const l of leaves) { const p = sway(l, time, l.seed); ctx.fillText(l.label!, p.x + 8, p.y - 6); }
+    ctx.font = 'italic 20px "Instrument Serif", serif';
+    ctx.textAlign = 'right'; ctx.fillStyle = '#ECEAE3';
+    for (const [a, b] of edges) if (b.level === 100) { const p = sway(bez(a, b, 0.9), time, b.seed); ctx.fillText(b.out!, Math.min(p.x, w - 28), p.y - 22); }
+    ctx.textAlign = 'left';
+    ctx.beginPath(); ctx.arc(conf.x, conf.y, 10, 0, Math.PI * 2); ctx.fillStyle = '#0B0F12'; ctx.fill();
+    ctx.lineWidth = 2; ctx.strokeStyle = '#ECEAE3'; ctx.stroke();
+    ctx.font = 'italic 26px "Instrument Serif", serif'; ctx.fillStyle = '#ECEAE3';
+    ctx.fillText('upanishad', conf.x - 46, conf.y - 22);
+  }
+
+  // ───────────── the river down the page ─────────────
+  const flow = document.getElementById('lc-flow')!;
+  const spine = document.getElementById('lc-spine') as unknown as SVGSVGElement;
+  const paths = ['lc-spine-main', 'lc-spine-water', 'lc-spine-mask'].map((id) => document.getElementById(id) as unknown as SVGPathElement);
+  const mask = document.getElementById('lc-reveal')!;
+  type S = { x: number; y: number; tx: number; ty: number; l: number };
+  let total = 0, samples: S[] = [], revealed = 0, weirL = Infinity, paperY = Infinity;
+  const STEP = 8;
+
+  function buildSpine() {
+    if (flow.offsetParent === null) return;
+    const fr = flow.getBoundingClientRect();
+    const W = flow.clientWidth, H = flow.offsetHeight;
+    spine.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    spine.style.height = `${H}px`;
+    for (const [k, v] of Object.entries({ x: 0, y: 0, width: W, height: H })) mask.setAttribute(k, String(v));
+    const centre = (el: Element) => { const r = el.getBoundingClientRect(); return { x: r.left + r.width / 2 - fr.left, y: r.top + r.height / 2 - fr.top }; };
+    const pts = [...flow.querySelectorAll<HTMLElement>('[data-spine]')].filter((el) => el.getClientRects().length).map(centre).sort((a, b) => a.y - b.y);
+    if (pts.length < 2) return;
+    let d = `M${pts[0].x} ${pts[0].y}`;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = pts[i - 1] ?? pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] ?? p2;
+      d += ` C${p1.x + (p2.x - p0.x) / 6} ${p1.y + (p2.y - p0.y) / 6} ${p2.x - (p3.x - p1.x) / 6} ${p2.y - (p3.y - p1.y) / 6} ${p2.x} ${p2.y}`;
+    }
+    paths.forEach((p) => p.setAttribute('d', d));
+    total = paths[0].getTotalLength();
+    samples = [];
+    for (let l = 0; l <= total; l += STEP) {
+      const a = paths[0].getPointAtLength(l), b = paths[0].getPointAtLength(Math.min(total, l + 2));
+      const tl = Math.hypot(b.x - a.x, b.y - a.y) || 1;
+      samples.push({ x: a.x, y: a.y, tx: (b.x - a.x) / tl, ty: (b.y - a.y) / tl, l });
+    }
+    paths[2].style.strokeDasharray = `${total} ${total}`;
+    const weir = centre(flow.querySelector('[data-weir]')!);
+    weirL = samples.reduce((best, s) => (Math.hypot(s.x - weir.x, s.y - weir.y) < Math.hypot(best.x - weir.x, best.y - weir.y) ? s : best), samples[0]).l;
+    const delta = document.getElementById('lc-delta')!.getBoundingClientRect();
+    paperY = delta.top - fr.top + delta.height * 0.32;
+    drawSpine();
+    seedFish();
+  }
+  function drawSpine() {
+    if (!total) return;
+    const y = innerHeight * 0.62 - flow.getBoundingClientRect().top;
+    let l = 0;
+    for (const s of samples) if (s.y <= y) l = Math.max(l, s.l);
+    revealed = reduce ? total : l;
+    paths[2].style.strokeDashoffset = String(total - revealed);
+  }
+  addEventListener('scroll', () => requestAnimationFrame(drawSpine), { passive: true });
+
+  // ───────────── the shoal ─────────────
+  const fc = document.getElementById('lc-fish') as HTMLCanvasElement;
+  const fctx = fc.getContext('2d')!;
+  const N = coarse || innerWidth < 768 ? 20 : 48;
+  type Fish = { l: number; n: number; dir: number; v: number; vl: number; vn: number; amber: boolean; beat: number; glow: number; side: number; fade: number };
+  let fish: Fish[] = [];
+  const ripples: { x: number; y: number; t: number }[] = [];
+  let lastSide = 0, weirOpen = false;
+  const sAt = (l: number) => samples[Math.max(0, Math.min(samples.length - 1, Math.round(l / STEP)))];
+  const lAtY = (y: number) => { let lo = 0, hi = samples.length - 1; while (lo < hi) { const m = (lo + hi) >> 1; if (samples[m].y < y) lo = m + 1; else hi = m; } return samples[lo]?.l ?? 0; };
+
+  // Fish live only in the drawn part of the river near the screen; outside it they are parked (l = -1).
+  const band = () => {
+    const top = -flow.getBoundingClientRect().top;
+    return { lo: lAtY(top - 240), hi: Math.min(revealed - 20, lAtY(top + innerHeight + 240)) };
+  };
+  function place(f: Fish) {
+    const { lo, hi } = band();
+    if (hi < lo + 40) { f.l = -1; return; }
+    f.l = lo + Math.random() * (hi - lo);
+    f.side = f.l < weirL ? 0 : 1;
+    f.fade = 0;
+  }
+  function seedFish() {
+    if (!samples.length) return;
+    fish = Array.from({ length: N }, () => {
+      const f: Fish = { l: -1, n: (Math.random() - 0.5) * 30, dir: Math.random() < 0.7 ? 1 : -1, v: 22 + Math.random() * 14, vl: 0, vn: 0, amber: Math.random() < 0.125, beat: Math.random() * 6, glow: 0, side: 0, fade: 0 };
+      place(f);
+      return f;
+    });
+  }
+
+  function stepFish(dt: number) {
+    const fr = flow.getBoundingClientRect();
+    const viewTop = -fr.top, viewBot = viewTop + innerHeight;
+    const ptr = { x: pointer.x - fr.left, y: pointer.y - fr.top };
+    const live = performance.now() - pointer.at < 1500;
+    const maxL = Math.max(0, revealed - 20);
+    for (const f of fish) {
+      if (f.l < 0) { place(f); continue; }
+      f.fade = Math.min(1, f.fade + dt * 1.5);
+      // cohesion and alignment with neighbours along the river
+      let cn = 0, cnt = 0;
+      for (const g of fish) if (g !== f && g.l >= 0 && Math.abs(g.l - f.l) < 40) { cn += g.n; cnt++; }
+      if (cnt) f.vn += ((cn / cnt - f.n) * 0.4) * dt;
+      f.vn += -f.n * 0.08 * dt + (Math.random() - 0.5) * 6 * dt;
+      const s = sAt(f.l), nx = -s.ty, ny = s.tx;
+      const px = s.x + nx * f.n, py = s.y + ny * f.n;
+      if (live && !reduce) {
+        const dx = px - ptr.x, dy = py - ptr.y, d = Math.hypot(dx, dy);
+        if (d < 110 && d > 0.1) {
+          const k = ((110 - d) / 110) * 90 * dt * 3;
+          f.vl += ((dx * s.tx + dy * s.ty) / d) * k; f.vn += ((dx * nx + dy * ny) / d) * k * 0.35;
+          f.glow = 1;
+        }
+      }
+      f.vl = Math.max(-70, Math.min(70, f.vl)) * Math.pow(0.2, dt);
+      f.vn *= Math.pow(0.3, dt);
+      f.n = Math.max(-28, Math.min(28, f.n + f.vn * dt * 8));
+      if (!reduce) { f.l += (f.dir * f.v + f.vl) * dt; f.beat += dt * (8 + Math.abs(f.vl) * 0.2); }
+      f.glow = Math.max(0, f.glow - dt * 2.5);
+      // banks of the drawn river; the weir holds until a change is approved
+      if (f.l > maxL) { f.l = maxL; f.dir = -1; }
+      if (f.l < 0) { f.l = 0; f.dir = 1; }
+      if (!weirOpen) {
+        if (f.side === 0 && f.l > weirL - 16) { f.l = weirL - 16; f.dir = -1; }
+        if (f.side === 1 && f.l < weirL + 16) { f.l = weirL + 16; f.dir = 1; }
+      } else f.side = f.l < weirL ? 0 : 1;
+      // keep the shoal near the screen: fish that drift far away reappear somewhere in the visible water
+      const y = sAt(f.l).y;
+      if (y < viewTop - 260 || y > viewBot + 260) place(f);
+    }
+    // ripple when the pointer crosses the water
+    if (live && samples.length && !reduce) {
+      const l0 = lAtY(ptr.y);
+      let best = sAt(l0), bd = Infinity;
+      for (let l = Math.max(0, l0 - 300); l <= Math.min(total, l0 + 300); l += STEP) { const s = sAt(l); const d = Math.hypot(s.x - ptr.x, s.y - ptr.y); if (d < bd) { bd = d; best = s; } }
+      const side = Math.sign(best.tx * (ptr.y - best.y) - best.ty * (ptr.x - best.x));
+      if (side && lastSide && side !== lastSide && bd < 60 && best.l < revealed) ripples.push({ x: best.x, y: best.y, t: 0 });
+      lastSide = side;
+    }
+  }
+
+  function drawFishLayer(dt: number) {
+    const W = innerWidth, H = innerHeight, r = Math.min(devicePixelRatio || 1, 2);
+    if (fc.width !== Math.round(W * r) || fc.height !== Math.round(H * r)) { fc.width = Math.round(W * r); fc.height = Math.round(H * r); }
+    fctx.setTransform(r, 0, 0, r, 0, 0);
+    fctx.clearRect(0, 0, W, H);
+    const fr = flow.getBoundingClientRect();
+    if (fr.bottom < 0 || fr.top > H || !samples.length) return;
+    fctx.lineCap = 'round'; fctx.lineWidth = 1.6;
+    for (const f of fish) {
+      if (f.l < 0 || f.l > revealed - 10) continue;
+      const s = sAt(f.l), nx = -s.ty, ny = s.tx;
+      const x = s.x + nx * f.n + fr.left, y = s.y + ny * f.n + fr.top;
+      if (y < -20 || y > H + 20) continue;
+      const night = s.y < paperY;
+      const a = (0.8 + f.glow * 0.2) * f.fade;
+      fctx.strokeStyle = f.amber ? `rgba(242,169,0,${a})` : night ? `rgba(236,234,227,${a})` : `rgba(44,90,110,${(0.8 + f.glow * 0.2) * f.fade})`;
+      const dir = f.dir + f.vl / 60 >= 0 ? 1 : -1;
+      drawFish(fctx, x, y, s.tx * dir, s.ty * dir, 9 + (f.n % 5 + 5) % 5, f.beat);
+    }
+    for (let i = ripples.length - 1; i >= 0; i--) {
+      const rp = ripples[i];
+      rp.t += dt;
+      const k = rp.t / 0.9;
+      if (k >= 1) { ripples.splice(i, 1); continue; }
+      const night = rp.y < paperY;
+      for (let j = 0; j < 3; j++) {
+        const kk = Math.max(0, k - j * 0.15);
+        if (!kk) continue;
+        fctx.strokeStyle = night ? `rgba(236,234,227,${0.5 * (1 - kk)})` : `rgba(44,90,110,${0.5 * (1 - kk)})`;
+        fctx.lineWidth = 1;
+        fctx.beginPath(); fctx.arc(rp.x + fr.left, rp.y + fr.top, 4 + 60 * (1 - Math.pow(1 - kk, 3)), 0, Math.PI * 2); fctx.stroke();
+      }
+    }
+  }
+
+  // tap on touch: one ripple and a scatter
+  addEventListener('pointerdown', (e) => {
+    if (e.pointerType === 'mouse' || !samples.length) return;
+    const fr = flow.getBoundingClientRect();
+    ripples.push({ x: e.clientX - fr.left, y: e.clientY - fr.top, t: 0 });
+    pointer.x = e.clientX; pointer.y = e.clientY; pointer.at = performance.now();
+  });
+
+  // ───────────── the weir ─────────────
+  const gate = document.getElementById('lc-gate')!;
+  const stamp = gate.querySelector<HTMLElement>('[data-stamp]')!;
+  const buttons = gate.querySelector<HTMLElement>('[data-buttons]')!;
+  const okBtn = buttons.querySelector<HTMLElement>('[data-act="ok"]')!, noBtn = buttons.querySelector<HTMLElement>('[data-act="no"]')!;
+  const ts = () => new Date().toTimeString().slice(0, 8);
+  new IntersectionObserver((es, o) => es.forEach((e) => { if (e.isIntersecting) { gate.dataset.state = 'arrived'; o.disconnect(); } }), { threshold: 0.6 }).observe(gate);
+  gate.querySelectorAll<HTMLButtonElement>('[data-act]').forEach((b) => b.addEventListener('click', () => {
+    if (gate.dataset.state === 'ok' || gate.dataset.state === 'no') {
+      gate.dataset.state = 'arrived'; stamp.textContent = ''; noBtn.hidden = false; okBtn.textContent = 'Potvrdi 108 €'; weirOpen = false;
+      fish.forEach((f) => (f.side = f.l < weirL ? 0 : 1));
+      return;
+    }
+    if (b.dataset.act === 'ok') {
+      gate.dataset.state = 'ok'; weirOpen = true;
+      stamp.style.color = '#9BE564';
+      stamp.textContent = `potvrđeno ${ts()} · 108 €\nposlužitelj: provedeno točno ono što je potvrđeno ✓\nBooking.com i Beds24 ažurirani`;
+    } else {
+      gate.dataset.state = 'no';
+      stamp.style.color = '#F2A900';
+      stamp.textContent = `odbačeno ${ts()} · cijena ostaje 120 €`;
+      (document.getElementById('lc-oxbow-run') as unknown as SVGAnimationElement).beginElement();
+    }
+    noBtn.hidden = true; okBtn.textContent = 'Ponovi';
+  }));
+
+  // ───────────── projects come into focus at the centre of the screen ─────────────
+  const pio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) e.target.classList.add('lc-on'); }), { rootMargin: '-35% 0px -35% 0px' });
+  document.querySelectorAll('.lc [data-proj]').forEach((el) => pio.observe(el));
+
+  // ───────────── contact: click assembles the address in the browser ─────────────
+  document.querySelectorAll<HTMLAnchorElement>('.lc a[data-rr]').forEach((a) => a.addEventListener('click', (e) => {
+    if (a.dataset.revealed) return;
+    e.preventDefault();
+    const v = [...a.dataset.rr!].reverse().join('');
+    a.dataset.revealed = '1';
+    a.querySelectorAll<HTMLElement>('[data-v]').forEach((s) => (s.textContent = v));
+    a.href = a.dataset.kind === 'tel' ? `tel:${v.replace(/\s/g, '')}` : `mailto:${v}`;
+  }));
+
+  // ───────────── loop ─────────────
+  build();
+  document.fonts.ready.then(buildSpine);
+  addEventListener('load', buildSpine);
+  addEventListener('resize', () => { build(); buildSpine(); });
+  addEventListener('variantchange', () => { build(); buildSpine(); });
+  let prev = performance.now();
+  const loop = (ms: number) => {
+    requestAnimationFrame(loop);
+    const dt = Math.min((ms - prev) / 1000, 0.05); prev = ms;
+    if (hero.offsetParent === null) { fctx.clearRect(0, 0, fc.width, fc.height); return; }
+    if (hero.getBoundingClientRect().bottom > 0) {
+      if (w !== hero.clientWidth || h !== hero.clientHeight) build();
+      drawHero(ms / 1000, dt);
+    }
+    if (samples.length) { stepFish(dt); drawFishLayer(dt); }
+  };
+  requestAnimationFrame(loop);
+</script>
