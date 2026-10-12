@@ -1,0 +1,42 @@
+---
+// PROTOTYPE — round 2: concept directions on one route, switchable via ?variant=
+// (floating bar + ←/→ keys in `npm run dev`). Delete this page and src/prototype/ once one wins.
+import Base from '../layouts/Base.astro';
+import Switcher from '../prototype/Switcher.astro';
+import IzvanKadra from '../prototype/IzvanKadra.astro';
+import Milisekunda from '../prototype/Milisekunda.astro';
+import Potvrdi from '../prototype/Potvrdi.astro';
+import Usce from '../prototype/Usce.astro';
+import Leca from '../prototype/Leca.astro';
+
+const variants = [
+  { key: 'E', name: 'Leća — A + D, firma prije projekata' },
+  { key: 'A', name: 'Izvan kadra — kursor je kamera' },
+  { key: 'B', name: '0,4 ms — vrijeme je raspored' },
+  { key: 'C', name: 'Potvrdi — stranica predlaže, vi potvrđujete' },
+  { key: 'D', name: 'Ušće — mnogo izvora, jedan feed' },
+];
+---
+
+<Base title="Upanishad — prototip početne" noindex>
+  <div data-variant="E"><Leca /></div>
+  <div data-variant="A" hidden><IzvanKadra /></div>
+  <div data-variant="B" hidden><Milisekunda /></div>
+  <div data-variant="C" hidden><Potvrdi /></div>
+  <div data-variant="D" hidden><Usce /></div>
+  {import.meta.env.DEV && <Switcher variants={variants} />}
+</Base>
+
+<script>
+  // Contact obfuscation: the value is stored reversed in data-r and only assembled on click.
+  document.querySelectorAll<HTMLAnchorElement>('a[data-r]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      if (a.dataset.revealed) return;
+      e.preventDefault();
+      const value = [...a.dataset.r!].reverse().join('');
+      a.dataset.revealed = '1';
+      (a.querySelector('[data-slot]') ?? a).textContent = value;
+      a.href = a.dataset.kind === 'tel' ? `tel:${value.replace(/\s/g, '')}` : `mailto:${value}`;
+    });
+  });
+</script>
