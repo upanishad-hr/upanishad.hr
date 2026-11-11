@@ -5,3 +5,21 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+# trade.upanishad.hr is a domain alias of this site. Its pages are built under /trade/ (src/pages/trade/);
+# these rules serve them at the root of that host. Rules run top to bottom and the first match wins.
+# Until the alias is added in Netlify, no request has this host and the rules do nothing.
+
+# Shared CSS and fonts stay where Astro put them.
+[[redirects]]
+  from = "https://trade.upanishad.hr/_astro/*"
+  to = "/_astro/:splat"
+  status = 200
+  force = true
+
+# Everything else on the trade host comes from /trade/ (forced: /index.html exists and would win otherwise).
+[[redirects]]
+  from = "https://trade.upanishad.hr/*"
+  to = "/trade/:splat"
+  status = 200
+  force = true

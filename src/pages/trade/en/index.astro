@@ -1,0 +1,13 @@
+---
+// Served at https://trade.upanishad.hr/en/ (netlify.toml rewrites that host to /trade/).
+import Base from '../../../layouts/Base.astro';
+import Trade from '../../../components/Trade.astro';
+import { trade } from '../../../data/company';
+import { tradeStrings } from '../../../i18n/trade';
+
+const t = tradeStrings.en;
+---
+
+<Base title={t.meta.title} description={t.meta.description} lang="en" urls={trade.url}>
+  <Trade lang="en" />
+</Base>

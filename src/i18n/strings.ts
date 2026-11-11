@@ -8,7 +8,7 @@ const hr = {
     title: 'Upanishad · softverska tvrtka iz Aljmaša',
     description: 'Upanishad gradi platforme za sportske podatke i AI alate za turizam. Promjenu opišete, a za nekoliko minuta otvorite radnu verziju s njom.',
   },
-  nav: { who: 'Tko smo', how: 'Kako radimo', what: 'Što radimo', work: 'Projekti', contact: 'Kontakt' },
+  nav: { who: 'Tko smo', how: 'Kako radimo', what: 'Što radimo', work: 'Projekti', contact: 'Kontakt', trade: 'Trade / zastupanje' },
   hero: {
     place: 'Aljmaš, gdje Drava ulazi u Dunav',
     h1: 'Softver koji možete isprobati',
@@ -114,6 +114,7 @@ const hr = {
     capital: 'Temeljni kapital 2.500,00 EUR, uplaćen u cijelosti',
     director: 'Direktor: Matej Šimunić',
     mapAria: 'Shematski prikaz ušća Drave u Dunav kod Aljmaša',
+    trade: 'Trade: zastupanje proizvođača iz regije',
   },
   // Strings used by the client-side script (canvas labels, the weir).
   js: {
@@ -139,7 +140,7 @@ const en: Strings = {
     title: 'Upanishad · software company from Aljmaš, Croatia',
     description: 'Upanishad builds sports-data platforms and AI tools for tourism. Describe a change and open a working version of it a few minutes later.',
   },
-  nav: { who: 'Who we are', how: 'How we work', what: 'What we do', work: 'Projects', contact: 'Contact' },
+  nav: { who: 'Who we are', how: 'How we work', what: 'What we do', work: 'Projects', contact: 'Contact', trade: 'Trade' },
   hero: {
     place: 'Aljmaš, where the Drava meets the Danube',
     h1: 'Software you can try',
@@ -245,6 +246,7 @@ const en: Strings = {
     capital: 'Share capital EUR 2,500.00, paid in full',
     director: 'Director: Matej Šimunić',
     mapAria: 'Schematic of the Drava flowing into the Danube near Aljmaš',
+    trade: 'Trade: representing manufacturers from the region',
   },
   js: {
     sources: [

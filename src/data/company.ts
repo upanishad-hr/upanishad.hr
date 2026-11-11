@@ -7,6 +7,19 @@ export const contact = {
   phoneReversed: '6847 637 79 583+',
 };
 
+// Trade (zastupanje proizvođača) lives on trade.upanishad.hr. The same Netlify site serves it: netlify.toml
+// rewrites that host to /trade/. In `astro dev` the links stay local, so both pages can be clicked through.
+const dev = import.meta.env.DEV;
+export const trade = {
+  url: { hr: 'https://trade.upanishad.hr/', en: 'https://trade.upanishad.hr/en/' },
+  link: { hr: dev ? '/trade/' : 'https://trade.upanishad.hr/', en: dev ? '/trade/en/' : 'https://trade.upanishad.hr/en/' },
+  home: { hr: dev ? '/' : 'https://upanishad.hr/', en: dev ? '/en/' : 'https://upanishad.hr/en/' },
+  // Shown in plain text: factories copy it into their mail client.
+  email: 'trade@upanishad.hr',
+  // Empty = not shown. Matej decides whether a phone number goes on the trade page.
+  phone: '',
+};
+
 export const legal = {
   name: 'Upanishad d.o.o.',
   full: 'Upanishad društvo s ograničenom odgovornošću za informatički inžinjering',
