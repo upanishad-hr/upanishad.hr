@@ -6,9 +6,17 @@ interface Props {
   description?: string;
   lang?: 'hr' | 'en';
   noindex?: boolean;
+  // Public URL of this page in each language (hreflang + canonical). Defaults to the homepage.
+  urls?: { hr: string; en: string };
 }
 
-const { title, description, lang = 'hr', noindex = false } = Astro.props;
+const {
+  title,
+  description,
+  lang = 'hr',
+  noindex = false,
+  urls = { hr: 'https://upanishad.hr/', en: 'https://upanishad.hr/en/' },
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -19,10 +27,10 @@ const { title, description, lang = 'hr', noindex = false } = Astro.props;
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     {noindex && <meta name="robots" content="noindex, nofollow" />}
-    <link rel="alternate" hreflang="hr" href="https://upanishad.hr/" />
-    <link rel="alternate" hreflang="en" href="https://upanishad.hr/en/" />
-    <link rel="alternate" hreflang="x-default" href="https://upanishad.hr/" />
-    <link rel="canonical" href={lang === 'en' ? 'https://upanishad.hr/en/' : 'https://upanishad.hr/'} />
+    <link rel="alternate" hreflang="hr" href={urls.hr} />
+    <link rel="alternate" hreflang="en" href={urls.en} />
+    <link rel="alternate" hreflang="x-default" href={urls.hr} />
+    <link rel="canonical" href={urls[lang]} />
   </head>
   <body>
     <slot />

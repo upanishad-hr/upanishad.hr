@@ -1,0 +1,211 @@
+// All text on trade.upanishad.hr (zastupanje proizvođača), per language. Croatian is the source; English must have
+// the same shape (TypeScript checks it). Same rules as the homepage: docs/voice.md.
+// Never name buyers or suppliers, commission rates or prices here.
+
+const hr = {
+  lang: 'hr',
+  meta: {
+    title: 'Upanishad Trade · zastupanje proizvođača sa Zapadnog Balkana u Hrvatskoj',
+    description: 'Upanishad d.o.o. iz Aljmaša kraj Osijeka zastupa proizvođače iz BiH, Srbije, Crne Gore, Kosova, Albanije i Sjeverne Makedonije na hrvatskom tržištu. Kupac kupuje izravno od tvornice.',
+  },
+  nav: { how: 'Kako radimo', makers: 'Za proizvođače', buyers: 'Za kupce', contact: 'Kontakt', company: 'Upanishad d.o.o.' },
+  hero: {
+    place: 'Slavonija · Aljmaš kraj Osijeka',
+    h1: 'Zastupamo proizvođače sa Zapadnog Balkana',
+    h1em: 'na hrvatskom tržištu.',
+    lead: 'Tvornicama iz regije nalazimo kupce u Hrvatskoj. Sjedište nam je kraj Osijeka, blizu granica sa Srbijom i Bosnom i Hercegovinom. Kupac kupuje izravno od tvornice, a provizija se plaća samo na ostvarenu prodaju.',
+    countries: 'BiH · Srbija · Crna Gora · Kosovo · Albanija · Sjeverna Makedonija · Češka',
+    cta: 'Pišite na trade@upanishad.hr',
+    cta2: 'Kako radimo',
+  },
+  map: {
+    aria: 'Shematska karta: Osijek, rijeke Drava, Dunav i Sava, krug od 200 km oko Osijeka',
+    croatia: 'HRVATSKA',
+    serbia: 'SRBIJA',
+    bih: 'BiH',
+    hungary: 'MAĐARSKA',
+    belgrade: 'Beograd',
+    danube: 'Dunav',
+    radius: '200 km',
+    caption: 'Sarajevo, Tuzla, Banja Luka, Novi Sad i Beograd bliže su Osijeku nego Zagreb. Do granice sa Srbijom ima oko 30 km, do BiH oko 60 km.',
+    note: 'shematski prikaz · zračna linija',
+  },
+  how: {
+    h2: 'Kako',
+    h2em: 'radimo.',
+    steps: [
+      'Tvornica nam pošalje katalog, cjenik i dokumente za proizvode koje želi prodavati u Hrvatskoj.',
+      'Nađemo kupca, provjerimo dokumente i s tvornicom pripremimo ponudu na hrvatskom.',
+      'Kupac naručuje i plaća izravno tvornici. Tvornica mu izdaje račun i šalje robu.',
+      'Tvornica nam plaća proviziju, samo na ostvarenu prodaju.',
+    ],
+    note: 'Robu ne kupujemo, ne skladištimo i ne preprodajemo. Ugovor o zastupanju potpisujemo s tvornicom.',
+  },
+  makers: {
+    h2: 'Za',
+    h2em: 'proizvođače.',
+    items: [
+      'Nalazimo kupce u Hrvatskoj: stovarišta, izvođače radova, trgovačke lance i poljoprivrednike.',
+      'Pripremamo ponude na hrvatskom, s uvjetima isporuke i dokumentima koje kupac traži.',
+      'Pomažemo složiti dokumente za EU: CE oznaku i izjavu o svojstvima (DoP) za građevinske proizvode, dokaz o podrijetlu EUR.1 i EUDR paket podataka za drvo, pelete i papir.',
+      'Koordiniramo prijevoz od tvornice do kupca.',
+    ],
+    close: 'Vi prodajete izravno kupcu i izdajete mu račun. Provizija se plaća samo na ostvarenu prodaju.',
+  },
+  buyers: {
+    h2: 'Za',
+    h2em: 'kupce.',
+    items: [
+      'Prije ponude provjeravamo proizvođača: proizvodi li robu sam i ima li dokumente koje ta roba treba u EU.',
+      'Kupujete izravno od tvornice, na temelju njezine ponude i uz njezin račun.',
+      'Uz svaku isporuku dobivate dokumente: izjavu o svojstvima i CE oznaku, dokaz o podrijetlu EUR.1, a za drvo, pelete i papir EUDR podatke. Pomažemo ih provjeriti prije utovara.',
+      'Jedan kontakt na hrvatskom, od upita do isporuke.',
+    ],
+  },
+  cats: {
+    h2: 'Što',
+    h2em: 'zastupamo.',
+    list: [
+      { n: 'Sendvič paneli i limovi', d: 'krovni i fasadni paneli, trapezni i krovni limovi' },
+      { n: 'Drvo i lamelirano drvo', d: 'rezana građa, KVH i BSH nosači, drvene ploče' },
+      { n: 'Izolacija', d: 'EPS, XPS, mineralna vuna' },
+      { n: 'Peleti i ogrjev', d: 'drvni peleti, briketi, drva za ogrjev' },
+      { n: 'Čelik i armatura', d: 'armatura i mreže, profili, čelične konstrukcije' },
+      { n: 'Papirnata higijena', d: 'toaletni papir, papirnati ručnici, salvete' },
+      { n: 'Koža', d: 'obrađena koža za namještaj i obuću, kožni proizvodi' },
+    ],
+    other: 'Tražite nešto čega nema na popisu?',
+    otherCta: 'Pitajte',
+  },
+  eudr: {
+    kicker: 'EUDR · Uredba (EU) 2023/1115',
+    h2: 'EUDR od',
+    h2em: '30. 12. 2026.',
+    p1: 'Od 30. prosinca 2026. uvoznik drva, peleta, papira i drvenog namještaja za svaku isporuku mora imati geolokaciju sječe i dokaz da je drvo zakonito posječeno. Na temelju toga podnosi izjavu o dužnoj pažnji (DDS), a njezin broj daje carini prije puštanja robe u promet.',
+    p2: 'Bosna i Hercegovina, Srbija, Crna Gora, Albanija i Sjeverna Makedonija su na EU popisu zemalja niskog rizika. To skraćuje procjenu rizika, ali geolokacija i dokaz zakonitosti i dalje su obvezni. Kosova nema na popisu, pa za njega vrijedi standardni rizik.',
+    help: 'Dobavljačima i kupcima pomažemo složiti te podatke za svaku isporuku: koordinate sječina, dokumente o sječi i prometu drva te vezu između sirovine i pošiljke.',
+    limit: 'Ne izdajemo certifikate i ne jamčimo usklađenost. Izjavu podnosi uvoznik i on za nju odgovara.',
+  },
+  about: {
+    h2: 'Tko',
+    h2em: 'smo.',
+    p1: 'Upanishad d.o.o. je tvrtka iz Aljmaša kraj Osijeka, osnovana 2024. Većinu posla radi u softveru, za sportsku industriju i turizam. Zastupanje proizvođača je novi dio posla i vodi ga direktor, Matej Šimunić.',
+    p2: 'Trgovačko posredovanje i zastupanje inozemnih tvrtki upisani su u sudski registar.',
+    link: 'Više o tvrtki na upanishad.hr',
+  },
+  contact: {
+    h2: 'Pošaljite katalog',
+    h2em: 'ili upit.',
+    lead: 'Tvornice: pošaljite katalog, cjenik i popis dokumenata koje imate. Kupci: napišite što nabavljate i u kojim količinama.',
+    email: 'e-pošta',
+    phone: 'telefon',
+    langs: 'Pišite na hrvatskom, bosanskom, srpskom, crnogorskom ili engleskom. Odgovara Matej Šimunić.',
+  },
+  footer: { company: 'upanishad.hr · softver' },
+};
+
+export type TradeStrings = typeof hr;
+
+const en: TradeStrings = {
+  lang: 'en',
+  meta: {
+    title: 'Upanishad Trade · sales agent for Western Balkan manufacturers in Croatia',
+    description: 'Upanishad d.o.o., based near Osijek in eastern Croatia, represents manufacturers from Bosnia and Herzegovina, Serbia, Montenegro, Kosovo, Albania and North Macedonia on the Croatian market. Buyers purchase directly from the factory.',
+  },
+  nav: { how: 'How it works', makers: 'For manufacturers', buyers: 'For buyers', contact: 'Contact', company: 'Upanishad d.o.o.' },
+  hero: {
+    place: 'Eastern Croatia · Aljmaš near Osijek',
+    h1: 'We represent Western Balkan manufacturers',
+    h1em: 'on the Croatian market.',
+    lead: 'We find buyers in Croatia for factories from the region. We are based near Osijek, close to the borders with Serbia and Bosnia and Herzegovina. Buyers purchase directly from the factory, and commission is paid only on completed sales.',
+    countries: 'Bosnia and Herzegovina · Serbia · Montenegro · Kosovo · Albania · North Macedonia · Czechia',
+    cta: 'Write to trade@upanishad.hr',
+    cta2: 'How it works',
+  },
+  map: {
+    aria: 'Schematic map: Osijek, the Drava, Danube and Sava rivers, a 200 km circle around Osijek',
+    croatia: 'CROATIA',
+    serbia: 'SERBIA',
+    bih: 'BiH',
+    hungary: 'HUNGARY',
+    belgrade: 'Belgrade',
+    danube: 'Danube',
+    radius: '200 km',
+    caption: 'Sarajevo, Tuzla, Banja Luka, Novi Sad and Belgrade are all closer to Osijek than Zagreb is. The Serbian border is about 30 km away, Bosnia and Herzegovina about 60 km.',
+    note: 'schematic · straight-line distances',
+  },
+  how: {
+    h2: 'How it',
+    h2em: 'works.',
+    steps: [
+      'The factory sends us its catalogue, price list and documents for the products it wants to sell in Croatia.',
+      'We find a buyer, check the documents and prepare an offer in Croatian together with the factory.',
+      'The buyer orders from the factory and pays the factory. The factory invoices the buyer and ships the goods.',
+      'The factory pays us a commission, only on completed sales.',
+    ],
+    note: 'We don’t buy, store or resell goods. The agency agreement is signed with the factory.',
+  },
+  makers: {
+    h2: 'For',
+    h2em: 'manufacturers.',
+    items: [
+      'We find buyers in Croatia: builders’ merchants, contractors, retail chains and farms.',
+      'We prepare offers in Croatian, with the delivery terms and documents the buyer asks for.',
+      'We help you put together the documents the EU requires: CE marking and declaration of performance (DoP) for construction products, EUR.1 proof of origin, and the EUDR data package for wood, pellets and paper.',
+      'We coordinate transport from the factory to the buyer.',
+    ],
+    close: 'You sell directly to the buyer and invoice them yourself. Commission is paid only on completed sales.',
+  },
+  buyers: {
+    h2: 'For',
+    h2em: 'buyers.',
+    items: [
+      'Before we make an offer, we check the manufacturer: whether they make the goods themselves and have the documents those goods need in the EU.',
+      'You buy directly from the factory, on its offer and its invoice.',
+      'Every delivery comes with its documents: declaration of performance and CE marking, EUR.1 proof of origin, and EUDR data for wood, pellets and paper. We help check them before loading.',
+      'One contact who speaks Croatian and English, from enquiry to delivery.',
+    ],
+  },
+  cats: {
+    h2: 'What we',
+    h2em: 'represent.',
+    list: [
+      { n: 'Sandwich panels and metal sheets', d: 'roof and wall panels, trapezoidal and roofing sheets' },
+      { n: 'Timber and glulam', d: 'sawn timber, KVH and glulam beams, wood panels' },
+      { n: 'Insulation', d: 'EPS, XPS, mineral wool' },
+      { n: 'Pellets and firewood', d: 'wood pellets, briquettes, firewood' },
+      { n: 'Steel and rebar', d: 'rebar and mesh, sections, steel structures' },
+      { n: 'Paper hygiene', d: 'toilet paper, paper towels, napkins' },
+      { n: 'Leather', d: 'finished leather for furniture and footwear, leather goods' },
+    ],
+    other: 'Looking for something that isn’t on the list?',
+    otherCta: 'Ask us',
+  },
+  eudr: {
+    kicker: 'EUDR · Regulation (EU) 2023/1115',
+    h2: 'EUDR from',
+    h2em: '30 December 2026.',
+    p1: 'From 30 December 2026, an importer of wood, pellets, paper or wooden furniture needs, for every shipment, the geolocation of the harvest and proof that the wood was harvested legally. With that, the importer files a due diligence statement (DDS) and gives its reference number to customs before the goods are released.',
+    p2: 'Bosnia and Herzegovina, Serbia, Montenegro, Albania and North Macedonia are on the EU’s low-risk list. That shortens the risk assessment, but geolocation and proof of legality are still required. Kosovo isn’t on the list, so standard risk applies.',
+    help: 'We help suppliers and buyers put this data together for each shipment: coordinates of the harvest sites, harvest and transport documents, and the link between raw material and shipment.',
+    limit: 'We don’t issue certificates or guarantee compliance. The importer files the statement and is responsible for it.',
+  },
+  about: {
+    h2: 'Who',
+    h2em: 'we are.',
+    p1: 'Upanishad d.o.o. is a company from Aljmaš near Osijek, founded in 2024. Most of its work is software, for the sports industry and tourism. Representing manufacturers is a new line of business, run by the director, Matej Šimunić.',
+    p2: 'Trade intermediation and representation of foreign companies are registered activities in the Croatian court register.',
+    link: 'More about the company at upanishad.hr',
+  },
+  contact: {
+    h2: 'Send us your catalogue',
+    h2em: 'or enquiry.',
+    lead: 'Factories: send your catalogue, price list and a list of the documents you have. Buyers: tell us what you buy and in what quantities.',
+    email: 'email',
+    phone: 'phone',
+    langs: 'Write in English, Croatian, Bosnian, Serbian or Montenegrin. Matej Šimunić will reply.',
+  },
+  footer: { company: 'upanishad.hr · software' },
+};
+
+export const tradeStrings = { hr, en };

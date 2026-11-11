@@ -3,11 +3,12 @@
 // Below: one river draws itself down the page on scroll through [data-spine] anchors; a shoal of fish lives in the
 // part already drawn, scatters from the cursor, ripples where the cursor crosses the water and waits at the weir
 // until a change is confirmed. All text comes from src/i18n/strings.ts.
-import { contact, legal } from '../data/company';
+import { contact, legal, trade } from '../data/company';
 import { strings, type Lang } from '../i18n/strings';
 
 interface Props { lang: Lang }
 const t = strings[Astro.props.lang];
+const tradeLink = trade.link[Astro.props.lang];
 
 // Per-project layout (rim fill = how far along it is, side = where its tributary comes from).
 const layout = [
@@ -37,6 +38,7 @@ const em = 'font-iserif font-normal [font-stretch:100%]';
       <nav class="hidden gap-8 text-sm text-[#ECEAE3]/65 md:flex">
         <a href="#lc-who" class="lc-wave">{t.nav.who}</a><a href="#lc-how" class="lc-wave">{t.nav.how}</a><a href="#lc-delta" class="lc-wave">{t.nav.what}</a>
         <a href="#lc-work" class="lc-wave">{t.nav.work}</a>
+        <a href={tradeLink} class="lc-wave hidden border-l border-[#ECEAE3]/20 pl-8 lg:block">{t.nav.trade}</a>
       </nav>
       <div class="flex items-center gap-5 text-sm">
         <span class="flex gap-2 text-[#ECEAE3]/50">
@@ -336,7 +338,7 @@ const em = 'font-iserif font-normal [font-stretch:100%]';
       <path d="M0 80 L0 40 C 240 0, 480 70, 720 40 S 1200 0, 1440 36 L1440 80 Z" fill="#0B0F12" />
     </svg>
     <div class="mx-auto grid max-w-[1440px] gap-10 px-6 pb-12 pt-10 font-mono text-[11px] leading-relaxed md:grid-cols-[1fr_1fr_160px] md:px-12">
-      <div><span class="text-[#ECEAE3]">{legal.name}</span><br />{legal.full}<br />{t.legal.address}<br />{t.legal.river}</div>
+      <div><span class="text-[#ECEAE3]">{legal.name}</span><br />{legal.full}<br />{t.legal.address}<br />{t.legal.river}<br /><br /><a href={tradeLink} class="text-[#ECEAE3] underline decoration-[#ECEAE3]/30 underline-offset-4 hover:decoration-[#ECEAE3]">{t.legal.trade} ↗</a></div>
       <div>{t.legal.court} · MBS {legal.mbs}<br />OIB {legal.oib}<br />{t.legal.capital}<br />{t.legal.director}<br />{legal.bank}</div>
       <svg viewBox="0 0 160 160" class="w-40" aria-label={t.legal.mapAria}>
         <path d="M80 -5 C 76 30, 96 55, 92 80 S 78 130, 94 165" fill="none" stroke="#2C5A6E" stroke-width="8" stroke-linecap="round" />
