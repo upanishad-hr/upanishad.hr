@@ -16,8 +16,8 @@ export const trade = {
   home: { hr: dev ? '/' : 'https://upanishad.hr/', en: dev ? '/en/' : 'https://upanishad.hr/en/' },
   // Shown in plain text: factories copy it into their mail client.
   email: 'trade@upanishad.hr',
-  // Empty = not shown. Matej decides whether a phone number goes on the trade page.
-  phone: '',
+  // Empty = not shown. Matej approved the phone on 2026-11-11.
+  phone: '+385 97 736 7486',
 };
 
 export const legal = {

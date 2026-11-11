@@ -56,9 +56,9 @@ const hr = {
     h2: 'Za',
     h2em: 'kupce.',
     items: [
-      'Nudimo samo proizvođače koje smo provjerili: da robu proizvode sami i da imaju dokumente koje ta roba treba u EU.',
+      'Prije ponude provjeravamo proizvođača: proizvodi li robu sam i ima li dokumente koje ta roba treba u EU.',
       'Kupujete izravno od tvornice, na temelju njezine ponude i uz njezin račun.',
-      'Uz svaku isporuku dobivate dokumente: izjavu o svojstvima i CE oznaku, dokaz o podrijetlu EUR.1, a za drvo, pelete i papir EUDR podatke. Provjeravamo ih prije utovara.',
+      'Uz svaku isporuku dobivate dokumente: izjavu o svojstvima i CE oznaku, dokaz o podrijetlu EUR.1, a za drvo, pelete i papir EUDR podatke. Pomažemo ih provjeriti prije utovara.',
       'Jedan kontakt na hrvatskom, od upita do isporuke.',
     ],
   },
@@ -160,9 +160,9 @@ const en: TradeStrings = {
     h2: 'For',
     h2em: 'buyers.',
     items: [
-      'We only offer manufacturers we have checked: they make the goods themselves and have the documents those goods need in the EU.',
+      'Before we make an offer, we check the manufacturer: whether they make the goods themselves and have the documents those goods need in the EU.',
       'You buy directly from the factory, on its offer and its invoice.',
-      'Every delivery comes with its documents: declaration of performance and CE marking, EUR.1 proof of origin, and EUDR data for wood, pellets and paper. We check them before loading.',
+      'Every delivery comes with its documents: declaration of performance and CE marking, EUR.1 proof of origin, and EUDR data for wood, pellets and paper. We help check them before loading.',
       'One contact who speaks Croatian and English, from enquiry to delivery.',
     ],
   },
