@@ -4,7 +4,7 @@
 // Stored reversed and assembled in the browser on click, so scrapers don't find them in the HTML.
 export const contact = {
   emailReversed: 'rh.dahsinapu@jetam',
-  phoneReversed: '6847 637 79 583+',
+  phoneReversed: '1838 226 19 583+',
 };
 
 // Trade (zastupanje proizvođača) lives on trade.upanishad.hr. The same Netlify site serves it: netlify.toml
